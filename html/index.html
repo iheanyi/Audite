@@ -17,7 +17,7 @@
     /* Padding below the footer and lighter body text */
 
     body {
-      padding-bottom: 40px;
+      padding-bottom: 10px;
       background-color: #5a5a5a;
     }
 
@@ -70,8 +70,8 @@
 
     /* Carousel base class */
     .carousel {
-      margin-bottom: 10px;
-      box-shadow: 10px 10px 5px #000;
+      margin-bottom: 30px;
+      box-shadow: 3px 3px 3px 3px #000;
     }
 
     .carousel .container {
@@ -145,6 +145,7 @@
     .featurette {
       padding-top: 120px; /* Vertically center images part 1: add padding above and below text. */
       overflow: hidden; /* Vertically center images part 2: clear their floats. */
+       box-shadow: 3px 3px 3px 3px #000;
     }
     .featurette-image {
       margin-top: -120px; /* Vertically center images part 3: negative margin up the image the same amount of the padding to center it. */
@@ -174,11 +175,23 @@
     @media (max-width: 979px) {
 
       .carousel .item {
-        height: 500px;
+        height: 350px;
       }
       .carousel img {
         width: auto;
-        height: 500px;
+        height: 350px;
+      }
+
+       .carousel .item {
+        height: 350px;
+      }
+      .carousel-caption {
+        width: 65%;
+        padding: 0 70px;
+        margin-top: 120px;
+      }
+      .carousel-caption h1 {
+        font-size: 30px;
       }
 
       .featurette {
@@ -196,10 +209,6 @@
 
 
     @media (max-width: 767px) {
-
-      .navbar-inner {
-        margin: -20px;
-      }
 
       .carousel {
         margin-left: -20px;
@@ -280,7 +289,7 @@
     <div id="myCarousel" class="carousel slide">
       <div class="carousel-inner">
         <div class="item active">
-          <img src="/static/1.jpg" alt="">
+          <img src="/static/img/albums/1.jpg" alt="">
           <div class="container">
             <div class="carousel-caption center">
               <h1>Golden Slumbers</h1>
@@ -290,7 +299,7 @@
           </div>
         </div>
         <div class="item">
-          <img src="/img/albums/2.jpg" alt="">
+          <img src="/static/img/albums/2.jpg" alt="">
           <div class="container">
             <div class="carousel-caption">
               <h1>El Schorcho</h1>
@@ -308,19 +317,18 @@
     ================================================== -->
     <!-- Wrap the rest of the page in another container to center all the content. -->
     <div class="container marketing">
-      <h3>What's Next?...</h3>
       <!-- Three columns of text below the carousel -->
       <div class="row">
         <div class="span4">
-          <img class="img-polaroid" src="/../img/albums/3.jpg">
+          <img class="img-polaroid" src="/static/img/albums/3.jpg">
           <h3>Kanye West</h3>
         </div><!-- /.span4 -->
         <div class="span4">
-          <img class="img-polaroid" src="img/albums/4.jpg">
+          <img class="img-polaroid" src="/static/img/albums/4.jpg">
           <h3>Justin Timberlake</h3>
         </div><!-- /.span4 -->
         <div class="span4">
-          <img class="img-polaroid" src="img/albums/5.jpg">
+          <img class="img-polaroid" src="/static/img/albums/5.jpg">
           <h3>Mumford & Sons</h3>
         </div><!-- /.span4 -->
       </div><!-- /.row -->
