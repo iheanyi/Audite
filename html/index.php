@@ -261,7 +261,7 @@
 
   <body>
 
-   <% chosen=0 %>
+
 
     <!-- NAVBAR
     ================================================== -->
@@ -323,9 +323,6 @@
           <div style="position: relative; left: 0; top: 0;">
             <a href="http://www.pageresource.com">
               <img class="img-polaroid" src="/static/img/albums/3.jpg" style="position: relative; top: 0; left: 0; filter: blur(5px) brightness(0.5);">
-              %if chosen==1:
-                <img src="/static/img/checkmark.png" style="position: absolute; top: 7px; left: 7px;"/>
-              %endif
             </a>
           </div>
           <h3>Kanye West</h3>
@@ -333,25 +330,20 @@
         <div class="span4">
           <div style="position: relative; left: 0; top: 0;">
               <img class="img-polaroid" src="/static/img/albums/4.jpg" style="position: relative; top: 0; left: 0; filter: blur(5px) brightness(0.5);">
-              %if chosen==2:
-                <img src="/static/img/checkmark.png" style="position: absolute; top: 7px; left: 7px;"/>
-              %endif
           </div>
           <h3>Justin Timberlake</h3>
         </div><!-- /.span4 -->
         <div class="span4">
           <div style="position: relative; left: 0; top: 0;">
               <img class="img-polaroid" src="/static/img/albums/5.jpg" style="position: relative; top: 0; left: 0;">
-              %if chosen==3:
-                <img src="/static/img/checkmark.png" style="position: absolute; top: 7px; left: 7px;"/>
-              %endif
+              <img src="/static/img/checkmark.png" style="position: absolute; top: 7px; left: 7px;"/>
           </div>
           <h3>Mumford & Sons</h3>
         </div><!-- /.span4 -->
       </div><!-- /.row -->
 
       <footer>
-        <p>Taylor Seale & Iheanyi Ekechukwu</p>
+        <p>Taylor Seale & Iheanyi Ekechukwu 2013</p>
       </footer>
 
 
