@@ -259,23 +259,23 @@
                                    <link rel="shortcut icon" href="/ico/favicon.png">
   <script>
     function choose_song(num){
-      var x=document.getElementById("check1");
-      var y=document.getElementById("check2");
-      var z=document.getElementById("check3");
+      var xb=document.getElementById("artist1");
+      var yb=document.getElementById("artist2");
+      var zb=document.getElementById("artist3");
       if (num==1){
-        x.style.visibility="visible";
-        y.style.visibility="hidden";
-        z.style.visibility="hidden";
+        xb.setAttribute("style","-webkit-filter: blur(0px)")
+        yb.setAttribute("style","-webkit-filter: blur(3px)")
+        zb.setAttribute("style","-webkit-filter: blur(3px)")
       }
       else if (num==2){
-        x.style.visibility="hidden";
-        y.style.visibility="visible";
-        z.style.visibility="hidden"; 
+        xb.setAttribute("style","-webkit-filter: blur(3px)")
+        yb.setAttribute("style","-webkit-filter: blur(0px)")
+        zb.setAttribute("style","-webkit-filter: blur(3px)")
       }
       else if (num==3){
-        x.style.visibility="hidden";
-        y.style.visibility="hidden";
-        z.style.visibility="visible"; 
+        xb.setAttribute("style","-webkit-filter: blur(3px)")
+        yb.setAttribute("style","-webkit-filter: blur(3px)")
+        zb.setAttribute("style","-webkit-filter: blur(0px)")
       }
    
     }
@@ -341,28 +341,25 @@
       <!-- Three columns of text below the carousel -->
       <div class="row">
         <div class="span4">
-          <div style="position: relative; left: 0; top: 0;">
+          <div id="artist1">
             <a href="javascript:choose_song(1)">
-              <img class="img-polaroid" src="/static/img/albums/3.jpg" style="position: relative; top: 0; left: 0; filter: blur(5px) brightness(0.5);">
-              <div id="check1" style="visibility: hidden" ><img src="/static/img/checkmark.png" style="position: absolute; top: 7px; left: 7px;"/></div>
+              <img class="img-polaroid" src="/static/img/albums/3.jpg">
             </a>
           </div>
           <h3>Kanye West</h3>
         </div><!-- /.span4 -->
         <div class="span4">
-          <div id="artist2" style="position: relative; left: 0; top: 0;">
+          <div id="artist2">
             <a href="javascript:choose_song(2)">
-              <img class="img-polaroid" src="/static/img/albums/4.jpg" style="position: relative; top: 0; left: 0; filter: blur(5px) brightness(0.5);">
-              <div id="check2" style="visibility: hidden" ><img src="/static/img/checkmark.png" style="position: absolute; top: 7px; left: 7px;"/></div>
+              <img class="img-polaroid" src="/static/img/albums/4.jpg">
             </a>
           </div>
           <h3>Justin Timberlake</h3>
         </div><!-- /.span4 -->
         <div class="span4">
-          <div id="artist3" style="position: relative; left: 0; top: 0;">
+          <div id="artist3">
             <a href="javascript:choose_song(3)">
-              <img class="img-polaroid" src="/static/img/albums/5.jpg" style="position: relative; top: 0; left: 0;">
-              <div id="check3" style="visibility: hidden" ><img src="/static/img/checkmark.png" style="position: absolute; top: 7px; left: 7px;"/></div>
+              <img class="img-polaroid" src="/static/img/albums/5.jpg">
             </a>
           </div>
           <h3>Mumford & Sons</h3>
