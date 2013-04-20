@@ -257,11 +257,32 @@
       <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/ico/apple-touch-icon-72-precomposed.png">
                     <link rel="apple-touch-icon-precomposed" href="/ico/apple-touch-icon-57-precomposed.png">
                                    <link rel="shortcut icon" href="/ico/favicon.png">
+  <script>
+    function choose_song(num){
+      var x=document.getElementById("check1");
+      var y=document.getElementById("check2");
+      var z=document.getElementById("check3");
+      if (num==1){
+        x.style.visibility="visible";
+        y.style.visibility="hidden";
+        z.style.visibility="hidden";
+      }
+      else if (num==2){
+        x.style.visibility="hidden";
+        y.style.visibility="visible";
+        z.style.visibility="hidden"; 
+      }
+      else if (num==3){
+        x.style.visibility="hidden";
+        y.style.visibility="hidden";
+        z.style.visibility="visible"; 
+      }
+   
+    }
+  </script>
   </head>
 
   <body>
-
-   <% chosen=0 %>
 
     <!-- NAVBAR
     ================================================== -->
@@ -321,30 +342,28 @@
       <div class="row">
         <div class="span4">
           <div style="position: relative; left: 0; top: 0;">
-            <a href="http://www.pageresource.com">
+            <a href="javascript:choose_song(1)">
               <img class="img-polaroid" src="/static/img/albums/3.jpg" style="position: relative; top: 0; left: 0; filter: blur(5px) brightness(0.5);">
-              %if chosen==1:
-                <img src="/static/img/checkmark.png" style="position: absolute; top: 7px; left: 7px;"/>
-              %endif
+              <div id="check1" style="visibility: hidden" ><img src="/static/img/checkmark.png" style="position: absolute; top: 7px; left: 7px;"/></div>;
             </a>
           </div>
           <h3>Kanye West</h3>
         </div><!-- /.span4 -->
         <div class="span4">
-          <div style="position: relative; left: 0; top: 0;">
+          <div id="artist2" style="position: relative; left: 0; top: 0;">
+            <a href="javascript:choose_song(2)">
               <img class="img-polaroid" src="/static/img/albums/4.jpg" style="position: relative; top: 0; left: 0; filter: blur(5px) brightness(0.5);">
-              %if chosen==2:
-                <img src="/static/img/checkmark.png" style="position: absolute; top: 7px; left: 7px;"/>
-              %endif
+              <div id="check2" style="visibility: hidden" ><img src="/static/img/checkmark.png" style="position: absolute; top: 7px; left: 7px;"/></div>;
+            </a>
           </div>
           <h3>Justin Timberlake</h3>
         </div><!-- /.span4 -->
         <div class="span4">
-          <div style="position: relative; left: 0; top: 0;">
+          <div id="artist3" style="position: relative; left: 0; top: 0;">
+            <a href="javascript:choose_song(3)">
               <img class="img-polaroid" src="/static/img/albums/5.jpg" style="position: relative; top: 0; left: 0;">
-              %if chosen==3:
-                <img src="/static/img/checkmark.png" style="position: absolute; top: 7px; left: 7px;"/>
-              %endif
+              <div id="check3" style="visibility: hidden" ><img src="/static/img/checkmark.png" style="position: absolute; top: 7px; left: 7px;"/></div>;
+            </a>
           </div>
           <h3>Mumford & Sons</h3>
         </div><!-- /.span4 -->
