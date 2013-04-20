@@ -7,7 +7,7 @@ import os
 from mako.template import Template
 from mako.lookup import TemplateLookup
 
-head = """<!DOCTYPE html>
+header = """<!DOCTYPE html>
 				<html lang="en">
 				  <head>
 				    <meta charset="utf-8">
@@ -312,8 +312,9 @@ footer = """
 class HomePage(object):
 	@cherrypy.expose
 	def index(self):
-		checked = 1
-		html = head + navbar + """
+		chosen = 2
+		checkmark = """<img src="/static/img/checkmark.png" style="position: absolute; top: 7px; left: 7px;"/>"""
+		carousel =  """
 			    <!-- Carousel
 			    ================================================== -->
 			    <div id="myCarousel" class="carousel slide">
@@ -341,44 +342,52 @@ class HomePage(object):
 			      </div>
 			      <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
 			    </div><!-- /.carousel -->
+			   	"""
 
+		nextSongs = """
+		    <!-- Marketing messaging and featurettes
+		    ================================================== -->
+		    <!-- Wrap the rest of the page in another container to center all the content. -->
+		    <div class="container marketing">
+		      <!-- Three columns of text below the carousel -->
+		      <div class="row">
+		        <div class="span4">
+		          <div style="position: relative; left: 0; top: 0;">
+		              <img class="img-polaroid" src="/static/img/albums/3.jpg" style="position: relative; top: 0; left: 0; filter: blur(5px) brightness(0.5);">
+		    """
+		if chosen==1:
+			nextSongs+=checkmark
+		nextSongs+="""</div>
+	          <h3>Kanye West</h3>
+	        </div><!-- /.span4 -->
+	        <div class="span4">
+	          <div style="position: relative; left: 0; top: 0;">
+	              <img class="img-polaroid" src="/static/img/albums/4.jpg" style="position: relative; top: 0; left: 0; filter: blur(5px) brightness(0.5);">
+	        """
+		if chosen==2:
+			nextSongs+=checkmark
+		nextSongs+="""</div>
+	          <h3>Justin Timberlake</h3>
+	        </div><!-- /.span4 -->
+	        <div class="span4">
+	          <div style="position: relative; left: 0; top: 0;">
+	              <img class="img-polaroid" src="/static/img/albums/5.jpg" style="position: relative; top: 0; left: 0;">
+	              """
+		if chosen==3:
+			nextSongs+=checkmark
+		nextSongs+="""</div>
+	          </div>
+	          <h3>Mumford & Sons</h3>
+	        </div><!-- /.span4 -->
+	      </div><!-- /.row -->
 
-			    <!-- Marketing messaging and featurettes
-			    ================================================== -->
-			    <!-- Wrap the rest of the page in another container to center all the content. -->
-			    <div class="container marketing">
-			      <!-- Three columns of text below the carousel -->
-			      <div class="row">
-			        <div class="span4">
-			          <div style="position: relative; left: 0; top: 0;">
-			              <img class="img-polaroid" src="/static/img/albums/3.jpg" style="position: relative; top: 0; left: 0; filter: blur(5px) brightness(0.5);">
-			            	"""
-		if checked==1:
-			html+="""<img src="/static/img/checkmark.png" style="position: absolute; top: 7px; left: 7px;"/>"""
-		html+="""</div>
-			          <h3>Kanye West</h3>
-			        </div><!-- /.span4 -->
-			        <div class="span4">
-			          <div style="position: relative; left: 0; top: 0;">
-			              <img class="img-polaroid" src="/static/img/albums/4.jpg" style="position: relative; top: 0; left: 0; filter: blur(5px) brightness(0.5);">
-			          </div>
-			          <h3>Justin Timberlake</h3>
-			        </div><!-- /.span4 -->
-			        <div class="span4">
-			          <div style="position: relative; left: 0; top: 0;">
-			              <img class="img-polaroid" src="/static/img/albums/5.jpg" style="position: relative; top: 0; left: 0;">
-			          </div>
-			          <h3>Mumford & Sons</h3>
-			        </div><!-- /.span4 -->
-			      </div><!-- /.row -->
+	      <footer>
+	        <p>Taylor Seale & Iheanyi Ekechukwu 2013</p>
+	      </footer>
+	    </div><!-- /.container -->
+		"""
+		return header + navbar + carousel + nextSongs +  footer
 
-			      <footer>
-			        <p>Taylor Seale & Iheanyi Ekechukwu 2013</p>
-			      </footer>
-
-
-			    </div><!-- /.container -->
-			"""
-		return html + footer
+		def 
 conf = os.path.join(os.path.dirname(__file__), 'audite.config') 
 cherrypy.quickstart(HomePage(),config=conf)
