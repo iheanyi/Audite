@@ -10,7 +10,10 @@
     <!-- Le styles -->
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
     <style>
+
+
 
     /* GLOBAL STYLES
     -------------------------------------------------- */
@@ -180,6 +183,7 @@
       .carousel img {
         width: auto;
         height: 350px;
+        -webkit-filter: blur(1px)
       }
 
        .carousel .item {
@@ -222,6 +226,7 @@
       }
       .carousel img {
         height: 300px;
+        -webkit-filter: blur(1px)
       }
       .carousel-caption {
         width: 65%;
@@ -277,8 +282,23 @@
         yb.setAttribute("style","-webkit-filter: blur(3px)")
         zb.setAttribute("style","-webkit-filter: blur(0px)")
       }
-   
     }
+  </script>
+  <script type="text/javascript">
+      $(function() {
+      // When the testform is submitted…
+      $("#search-form").submit(function() { 
+          // post the form values via AJAX…
+          var postdata = {search_artist: $("#artist").val()} ;
+          $.post('/submit', postdata, function(data) {
+              // and set the title with the result
+              $("#simArtist1").html(data['simArtist1']) ;
+              $("#simArtist2").html(data['simArtist2']) ;
+              $("#simArtist3").html(data['simArtist3']) ;
+             });
+          return false;
+          });
+      });
   </script>
   </head>
 
@@ -293,8 +313,8 @@
           <div class="navbar-inner">
             <a class="brand" href="#">What's Next?</a>
             <div style="display: inline-block;" class="pull-right">
-              <form class="navbar-search">
-                <input type="text" class="search-query" placeholder="Search">
+              <form id="search-form" action="#" method="post" class="navbar-search">
+                <input type="text" id="artist" class="search-query" placeholder="Search">
               </form>
             </div>
           </div><!-- /.navbar-inner -->
@@ -346,7 +366,7 @@
               <img class="img-polaroid" src="/static/img/albums/3.jpg">
             </a>
           </div>
-          <h3>Kanye West</h3>
+          <h3 id="simArtist1"></h3>
         </div><!-- /.span4 -->
         <div class="span4">
           <div id="artist2">
@@ -354,7 +374,7 @@
               <img class="img-polaroid" src="/static/img/albums/4.jpg">
             </a>
           </div>
-          <h3>Justin Timberlake</h3>
+          <h3 id="simArtist2"></h3>
         </div><!-- /.span4 -->
         <div class="span4">
           <div id="artist3">
@@ -362,7 +382,7 @@
               <img class="img-polaroid" src="/static/img/albums/5.jpg">
             </a>
           </div>
-          <h3>Mumford & Sons</h3>
+          <h3 id="simArtist3"></h3>
         </div><!-- /.span4 -->
       </div><!-- /.row -->
 
@@ -378,8 +398,6 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-
-<script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script></script>
 
 <script type="text/javascript">
