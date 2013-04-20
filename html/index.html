@@ -292,6 +292,7 @@
           var postdata = {search_artist: $("#artist").val()} ;
           $.post('/submit', postdata, function(data) {
               // and set the title with the result
+              //$("#current_artist").html(data['currentArtist']) ;
               $("#simArtist1").html(data['simArtist1']) ;
               $("#simArtist2").html(data['simArtist2']) ;
               $("#simArtist3").html(data['simArtist3']) ;
@@ -334,7 +335,7 @@
           <div class="container">
             <div class="carousel-caption center">
               <h1>Golden Slumbers</h1>
-              <p class="lead">Artist: The Beatles</p>
+              <p id="current-artist" class="lead">Artist: The Beatles</p>
               <p class="lead">Album: Abbey Road</p>
             </div>
           </div>

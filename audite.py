@@ -17,13 +17,8 @@ class Audite(object):
     @cherrypy.expose
     def submit(self,search_artist):
         cherrypy.response.headers['Content-Type'] = 'application/json'
-        orig_artist = artist.Artist(search_artist)
-        simArtists=[]
-      	for i,similar_artist in enumerate(orig_artist.similar): 
-       		simArtists.append(similar_artist.name)
-       		if i==2:
-       			break
-        return simplejson.dumps(dict(simArtist1=simArtists[0],simArtist2=simArtists[1],simArtist3=simArtists[2]))
+        similarArtists=artist.similar(names=artist.Artist(search_artist).name,results=3)
+        return simplejson.dumps(dict(simArtist1=similarArtists[0].name,simArtist2=similarArtists[1].name,simArtist3=similarArtists[2].name))
 
 config = {'/html':
                 {'tools.staticdir.on': True,
