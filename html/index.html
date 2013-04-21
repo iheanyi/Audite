@@ -292,7 +292,9 @@
           var postdata = {search_artist: $("#artist").val()} ;
           $.post('/submit', postdata, function(data) {
               // and set the title with the result
-              //$("#current_artist").html(data['currentArtist']) ;
+              $("#currentArtistName").html(data['currentArtistName']) ;
+              $("#currentTrack").html(data['currentTrack']) ;
+              $("#currentArtistImage").attr("src", data['currentArtistImage']);
               $("#simArtist1Name").html(data['simArtist1Name']) ;
               $("#simArtist2Name").html(data['simArtist2Name']) ;
               $("#simArtist3Name").html(data['simArtist3Name']) ;
@@ -337,22 +339,11 @@
     <div id="myCarousel" class="carousel slide">
       <div class="carousel-inner">
         <div class="item active">
-          <img src="/static/img/albums/1.jpg" alt="">
+          <img id="currentArtistImage" alt="">
           <div class="container">
             <div class="carousel-caption center">
-              <h1>Golden Slumbers</h1>
-              <p id="current-artist" class="lead">Artist: The Beatles</p>
-              <p class="lead">Album: Abbey Road</p>
-            </div>
-          </div>
-        </div>
-        <div class="item">
-          <img src="/static/img/albums/2.jpg" alt="">
-          <div class="container">
-            <div class="carousel-caption">
-              <h1>El Schorcho</h1>
-              <p class="lead">Artist: Weezer</p>
-              <p class="lead">Album: Pinkerton</p>
+              <h1 id="currentTrack"></h1>
+              <p id="currentArtistName" class="lead"></p>
             </div>
           </div>
         </div>
@@ -370,7 +361,7 @@
         <div class="span4">
           <div id="artist1">
             <a href="javascript:choose_song(1)">
-              <img id="simArtist1Image" class="img-polaroid">
+              <img id="simArtist1Image" class="img-polaroid" style="height=100px width=100px">
             </a>
           </div>
           <h3 id="simArtist1Name"></h3>

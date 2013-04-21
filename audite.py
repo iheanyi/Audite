@@ -4,6 +4,7 @@ import os
 import simplejson
 import sys
 from pyechonest import artist
+from pyechonest import song
 from pyechonest import config
 config.ECHO_NEST_API_KEY="C9ZG8F5C8NZKIIZFE"
 
@@ -18,10 +19,12 @@ class Audite(object):
     def submit(self,search_artist):
         cherrypy.response.headers['Content-Type'] = 'application/json'
         similarArtists=artist.similar(names=artist.Artist(search_artist).name,results=3)
+        currentImage=artist.Artist(search_artist).get_images(results=1)
+        currentTrackName=song.search(artist=search_artist,song_min_hotttnesss=0.5,results=1)
         image1=similarArtists[0].get_images(results=1)
         image2=similarArtists[1].get_images(results=1)
         image3=similarArtists[2].get_images(results=1)
-        return simplejson.dumps(dict(simArtist1Name=similarArtists[0].name,simArtist1Image=image1[0]['url'],simArtist2Name=similarArtists[1].name,simArtist2Image=image2[0]['url'],simArtist3Name=similarArtists[2].name,simArtist3Image=image3[0]['url']))
+        return simplejson.dumps(dict(currentTrack=currentTrackName[0].title,currentArtistName=artist.Artist(search_artist).name,currentArtistImage=currentImage[0]['url'],simArtist1Name=similarArtists[0].name,simArtist1Image=image1[0]['url'],simArtist2Name=similarArtists[1].name,simArtist2Image=image2[0]['url'],simArtist3Name=similarArtists[2].name,simArtist3Image=image3[0]['url']))
 
 config = {'/html':
                 {'tools.staticdir.on': True,
