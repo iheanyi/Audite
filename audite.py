@@ -6,6 +6,7 @@ import sys
 from pyechonest import artist
 from pyechonest import song
 from pyechonest import config
+import random
 config.ECHO_NEST_API_KEY="C9ZG8F5C8NZKIIZFE"
 
 MEDIA_DIR = os.path.join(os.path.abspath("."), u"html")
@@ -18,7 +19,11 @@ class Audite(object):
     @cherrypy.expose
     def submit(self,search_artist):
         cherrypy.response.headers['Content-Type'] = 'application/json'
-        similarArtists=artist.similar(names=artist.Artist(search_artist).name,results=3)
+        similarArtists=artist.similar(names=artist.Artist(search_artist).name,results=15)
+        print similarArtists
+        random.shuffle(similarArtists)
+        print similarArtists
+
         currentImage=artist.Artist(search_artist).get_images(results=1)
         currentTrackName=song.search(artist=search_artist,song_min_hotttnesss=0.5,results=1)
         image1=similarArtists[0].get_images(results=1)
@@ -32,5 +37,13 @@ config = {'/html':
                 }
         }
 
-cherrypy.tree.mount(Audite(), '/', config=config)
-cherrypy.engine.start()
+#print cherrypy.engine.signal_handler.signals
+
+
+#cherrypy.tree.mount(Audite(), '/', config=config)
+cherrypy.quickstart(Audite(), '/', config=config)
+#cherrypy.engine.start()
+# if hasattr(cherrypy.engine, 'signal_handler'):
+#     cherrypy.engine.signal_handler.subscribe()
+#     cherrypy.engine.signal_handler(2)
+
