@@ -293,9 +293,15 @@
           $.post('/submit', postdata, function(data) {
               // and set the title with the result
               //$("#current_artist").html(data['currentArtist']) ;
-              $("#simArtist1").html(data['simArtist1']) ;
-              $("#simArtist2").html(data['simArtist2']) ;
-              $("#simArtist3").html(data['simArtist3']) ;
+              $("#simArtist1Name").html(data['simArtist1Name']) ;
+              $("#simArtist2Name").html(data['simArtist2Name']) ;
+              $("#simArtist3Name").html(data['simArtist3Name']) ;
+              $("#simArtist1Image").attr("src", data['simArtist1Image']);
+              $("#simArtist2Image").attr("src", data['simArtist2Image']);
+              $("#simArtist3Image").attr("src", data['simArtist3Image']);
+              document.getElementById("artist1").setAttribute("style","-webkit-filter: blur(0px)");
+              document.getElementById("artist2").setAttribute("style","-webkit-filter: blur(0px)");
+              document.getElementById("artist3").setAttribute("style","-webkit-filter: blur(0px)");
              });
           return false;
           });
@@ -364,26 +370,26 @@
         <div class="span4">
           <div id="artist1">
             <a href="javascript:choose_song(1)">
-              <img class="img-polaroid" src="/static/img/albums/3.jpg">
+              <img id="simArtist1Image" class="img-polaroid">
             </a>
           </div>
-          <h3 id="simArtist1"></h3>
+          <h3 id="simArtist1Name"></h3>
         </div><!-- /.span4 -->
         <div class="span4">
           <div id="artist2">
             <a href="javascript:choose_song(2)">
-              <img class="img-polaroid" src="/static/img/albums/4.jpg">
+              <img id="simArtist2Image" class="img-polaroid">
             </a>
           </div>
-          <h3 id="simArtist2"></h3>
+          <h3 id="simArtist2Name"></h3>
         </div><!-- /.span4 -->
         <div class="span4">
           <div id="artist3">
             <a href="javascript:choose_song(3)">
-              <img class="img-polaroid" src="/static/img/albums/5.jpg">
+              <img id="simArtist3Image" class="img-polaroid">
             </a>
           </div>
-          <h3 id="simArtist3"></h3>
+          <h3 id="simArtist3Name"></h3>
         </div><!-- /.span4 -->
       </div><!-- /.row -->
 
