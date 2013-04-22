@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*- 
 import cherrypy
 import webbrowser
 import os
@@ -12,6 +13,9 @@ import gdata.youtube
 import gdata.youtube.service
 from BeautifulSoup import BeautifulSoup
 import requests
+import base64
+import struct
+import urllib
 
 config.ECHO_NEST_API_KEY="C9ZG8F5C8NZKIIZFE"
 
@@ -34,7 +38,16 @@ class Audite(object):
         currentImageURL = currentImage[0]['url']
         tracks=song.search(artist=search_artist,song_min_hotttnesss=0.5,results=10)
         if(len(tracks)== 0):
-            currentTrackName = "No Tracks Found!"
+
+            tracks = song.search(artist =search_artist, results=10)
+
+            if(len(tracks) == 0):
+                currentTrackName = "No Track Found!"
+
+            else:
+                currentTrackName = tracks[0].title
+
+
         else:
             currentTrackName=tracks[0].title
 
@@ -69,19 +82,47 @@ class Audite(object):
         self.decodeURL(html)
 
     def parseCodecs(self, content):
-        matcher = re.compile(",")
+        print "PRINTING QUALITIES"
+        matcher = re.compile(',')
         match = matcher.search(content)
         if(match):
             qualities = matcher.split(content)
-            print qualities[0]
+           #qualities = content.split(',')
+            print qualities[1]
+            self.buildLinks(qualities[1], 1)
 
     def buildLinks(self, block, i):
-        urlMatcher = re.compile("http://.*")
+        urlMatcher = re.compile(r'http:\/\/.*')
+        match = urlMatcher.search(block)
+        print "BUILDING LINKS"
+        if(match):
+            print "MATCH FOUND"
+            sigPattern = re.compile(r'signature=[0-9A-Z]{40}\.[0-9A-Z]{40}')
+            sigMatcher = sigPattern.search(block)
+            if(sigMatcher):
+                print "AND ANOTHER ONE"
+                urlString = match.group()
+                urlString = re.sub(r'&type=.*',"", urlString)
+                urlString = re.sub(r'&signature=.*', "", urlString)
+                urlString = re.sub(r'&quality=.*', "", urlString)
+                urlString = re.sub(r'&fallback_host=.*', "", urlString)
+
+                sig = sigMatcher.group()
+                link = urlString + "&" + sig
+                link = re.sub(r'&itag=[0-9][0-9]&signature', "&signature", link)
+
+                linkArray = list(link)
+
+                link = ''.join(map(lambda x: chr(x % 256), linkArray))
+                #dlLink = bytes.decode(str(ink))
+                print link
+                #print dlLink
+                #print urlString
 
     def decodeURL(self, html):
         #print html
         startPattern = re.compile('"url_encoded_fmt_stream_map": "')
-        endPattern = re.compile('\", \"')
+        endPattern = re.compile(r'\\\", \\\\"')
 
 
         match = startPattern.search(html)
@@ -91,17 +132,16 @@ class Audite(object):
 
             start = startPattern.split(html)
             end = endPattern.split(start[1])
-            print len(end)
-            print len(start)
-            print end[0]
+ 
 
-            contentDecoded = end[0].encode('raw_unicode_escape').decode('utf-8')
-            contentDecoded.replace(", ", "-")
-            contentDecoded.replace("sig=", "signature=")
-            contentDecoded.replace("x-flv", "flv")
-            contentDecoded.replace("\\\\u0026", "&")
-            print contentDecoded
+            #print type(end[0])
+            contentDecoded = urllib.unquote(end[0])
+            contentDecoded = contentDecoded.replace(", ", "-")
+            contentDecoded = contentDecoded.replace("sig=", "signature=")
+            contentDecoded = contentDecoded.replace("x-flv", "flv")
+            contentDecoded = contentDecoded.replace("\\u0026", "&")
 
+            #print contentDecoded
             self.parseCodecs(contentDecoded)
             #print result
         #print r.text
