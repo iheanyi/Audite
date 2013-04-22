@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*- 
 import cherrypy
 import webbrowser
 import os
@@ -79,7 +78,10 @@ class Audite(object):
     def getYouTubeHTML(self, vidURL):
         r = requests.get(vidURL)
         html = r.text
-        self.decodeURL(html)
+
+        html = html.split("var_swf = ")[-1]
+        print html
+        #self.decodeURL(html)
 
     def parseCodecs(self, content):
         print "PRINTING QUALITIES"
@@ -88,8 +90,8 @@ class Audite(object):
         if(match):
             qualities = matcher.split(content)
            #qualities = content.split(',')
-            print qualities[1]
-            self.buildLinks(qualities[1], 1)
+            print qualities[0:5]
+            self.buildLinks(qualities[0], 1)
 
     def buildLinks(self, block, i):
         urlMatcher = re.compile(r'http:\/\/.*')
@@ -102,20 +104,23 @@ class Audite(object):
             if(sigMatcher):
                 print "AND ANOTHER ONE"
                 urlString = match.group()
-                urlString = re.sub(r'&type=.*',"", urlString)
-                urlString = re.sub(r'&signature=.*', "", urlString)
-                urlString = re.sub(r'&quality=.*', "", urlString)
-                urlString = re.sub(r'&fallback_host=.*', "", urlString)
+                urlString = re.sub(r"&type=*?","", urlString)
+                urlString = re.sub(r'&signature=*?', "", urlString)
+                urlString = re.sub(r'&quality=*?', "", urlString)
+                urlString = re.sub(r'&fallback_host=*?', "", urlString)
 
                 sig = sigMatcher.group()
                 link = urlString + "&" + sig
                 link = re.sub(r'&itag=[0-9][0-9]&signature', "&signature", link)
 
-                linkArray = list(link)
+                newlink = bytearray(link)
 
-                link = ''.join(map(lambda x: chr(x % 256), linkArray))
+                print newlink
+
+                memLink = memoryview(link)
                 #dlLink = bytes.decode(str(ink))
                 print link
+                print memLink.tobytes()
                 #print dlLink
                 #print urlString
 
