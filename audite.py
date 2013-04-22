@@ -57,16 +57,6 @@ class Audite(object):
             currentTrackName=tracks[0].title
 
         currentArtist = artist.Artist(search_artist).name
-
-<<<<<<< HEAD
-        print currentTrackName, currentArtist
-        image1=similarArtists[0].get_images(results=1)[0]
-        image2=similarArtists[1].get_images(results=1)[0]
-        image3=similarArtists[2].get_images(results=1)[0]
-        print image1, image2, image3
-        self.play_song(currentTrackName, currentArtist)
-        return simplejson.dumps(dict(currentTrack=currentTrackName, currentArtistName=currentArtist,currentArtistImage=currentImageURL,simArtist1Name=similarArtists[0].name,simArtist1Image=image1['url'],simArtist2Name=similarArtists[1].name,simArtist2Image=image2['url'],simArtist3Name=similarArtists[2].name,simArtist3Image=image3['url']))
-=======
         #print currentTrackName, currentArtist
         image1=similarArtists[0].get_images(results=50)
         random.shuffle(image1)
@@ -76,7 +66,6 @@ class Audite(object):
         random.shuffle(image3)
         #print image1, image2, image3
         return simplejson.dumps(dict(currentTrack=currentTrackName, currentArtistName=currentArtist,currentArtistImage=currentImageURL,simArtist1Name=similarArtists[0].name,simArtist1Image=image1[0]['url'],simArtist2Name=similarArtists[1].name,simArtist2Image=image2[0]['url'],simArtist3Name=similarArtists[2].name,simArtist3Image=image3[0]['url']))
->>>>>>> loading gif for loading up similar artists info
 
     def play_song(self, track_name, artist_name):
         yt_service = gdata.youtube.service.YouTubeService()
