@@ -41,6 +41,7 @@ class Audite(object):
         random.shuffle(currentImage)
         currentImageURL = currentImage[0]['url']
         tracks=song.search(artist=search_artist,song_min_hotttnesss=0.5,results=50)
+        self.currentName = search_artist
         random.shuffle(tracks)
         if(len(tracks)== 0):
 
@@ -65,6 +66,8 @@ class Audite(object):
         image3=similarArtists[2].get_images(results=50)
         random.shuffle(image3)
         #print image1, image2, image3
+
+        self.play_song(currentTrackName, currentArtist)
         return simplejson.dumps(dict(currentTrack=currentTrackName, currentArtistName=currentArtist,currentArtistImage=currentImageURL,simArtist1Name=similarArtists[0].name,simArtist1Image=image1[0]['url'],simArtist2Name=similarArtists[1].name,simArtist2Image=image2[0]['url'],simArtist3Name=similarArtists[2].name,simArtist3Image=image3[0]['url']))
 
     def play_song(self, track_name, artist_name):
@@ -87,8 +90,55 @@ class Audite(object):
         html = r.text
 
         html = html.split("var_swf = ")[-1]
-        print html
+        html = html.split("document.getElementById(")[0]
         #self.decodeURL(html)
+        self.getURLs(html)
+
+    def getURLs(self, content):
+
+        newString = urllib.unquote(content)
+        newString = urllib.unquote(newString)
+        newString = urllib.unquote(newString)
+
+        newString = newString.replace("\\u0026", "&")
+
+        links = newString.split('url_encoded_fmt_stream_map\":')[-1]
+        #print links
+
+        qualities = links.split("url=")
+        qualities.pop(0)
+        i = 0
+        cleanURLs = []
+        for each in qualities:
+            each = each.split(";+codecs=")[0]
+            #print str(i) + ":" + qualities[i]
+
+            if("video/mp4" in each):             
+                lastTag = each.split("&itag=")[-1]
+                url = each.split("&itag=" + lastTag)[0]
+                cleanURLs.append(url)
+            i += 1
+        #print qualities
+
+        contentDecoded = cleanURLs[0]
+
+        contentDecoded = contentDecoded.replace("sig=", "signature=")
+        contentDecoded = contentDecoded.replace("x-flv", "flv")
+
+        if("signature=" in contentDecoded):
+            print contentDecoded
+            return simplejson.dumps(dict(streamURL=contentDecoded))
+        else:
+
+            print "Retrying this junts . . . "
+            tracks=song.search(artist=self.currentName,results=50)
+            random.shuffle(tracks)
+            currentTrackName=tracks[0].title
+            self.play_song(currentTrackName, self.currentName)
+            return simplejson.dumps(dict(currentTrack=currentTrackName))
+
+
+
 
     def parseCodecs(self, content):
         print "PRINTING QUALITIES"

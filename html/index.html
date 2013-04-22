@@ -315,6 +315,7 @@
               $("#simArtist1Image").attr("src", data['simArtist1Image']);
               $("#simArtist2Image").attr("src", data['simArtist2Image']);
               $("#simArtist3Image").attr("src", data['simArtist3Image']);
+              $("#streamURL").attr("src", data['streamURL']);
              });
           return false;
           });
@@ -368,6 +369,19 @@
     <!-- Wrap the rest of the page in another container to center all the content. -->
     <div class="container marketing">
       <!-- Three columns of text below the carousel -->
+      <div class="row">
+        <div class="span4">
+
+        </div>
+        <div class="span4">
+        <audio controls autoplay>
+          <source id="streamURL" type="audio/mpeg">
+        </audio>
+        </div>
+        <div class="span4">
+        </div>
+      </div>
+      
       <div class="row">
         <div class="span4">
           <div id="artist1">
