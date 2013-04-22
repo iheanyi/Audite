@@ -18,24 +18,30 @@ import urllib
 
 config.ECHO_NEST_API_KEY="C9ZG8F5C8NZKIIZFE"
 
-MEDIA_DIR = os.path.join(os.path.abspath("."), u"html")
+HTML_DIR = os.path.join(os.path.abspath("."), u"html")
+STATIC_DIR = os.path.join(os.path.abspath("."), u"static")
+#similar=[]
+
 
 yt_service = gdata.youtube.service.YouTubeService()
 
 class Audite(object):
     @cherrypy.expose
     def index(self):
-        return open(os.path.join(MEDIA_DIR, u'index.html'))
+        return open(os.path.join(HTML_DIR, u'index.html'))
 
     @cherrypy.expose
     def submit(self,search_artist):
         cherrypy.response.headers['Content-Type'] = 'application/json'
-        similarArtists=artist.similar(names=artist.Artist(search_artist).name,results=15)
+        #similar.append(artist.Artist(search_artist))
+        #print similar
+        similarArtists=artist.similar(names=artist.Artist(search_artist).name,results=50)
         random.shuffle(similarArtists)      
-        currentImage=artist.Artist(search_artist).get_images(results=5)
-        #random.shuffle(currentImage)
+        currentImage=artist.Artist(search_artist).get_images(results=50)
+        random.shuffle(currentImage)
         currentImageURL = currentImage[0]['url']
-        tracks=song.search(artist=search_artist,song_min_hotttnesss=0.5,results=10)
+        tracks=song.search(artist=search_artist,song_min_hotttnesss=0.5,results=50)
+        random.shuffle(tracks)
         if(len(tracks)== 0):
 
             tracks = song.search(artist =search_artist, results=10)
@@ -52,6 +58,7 @@ class Audite(object):
 
         currentArtist = artist.Artist(search_artist).name
 
+<<<<<<< HEAD
         print currentTrackName, currentArtist
         image1=similarArtists[0].get_images(results=1)[0]
         image2=similarArtists[1].get_images(results=1)[0]
@@ -59,6 +66,17 @@ class Audite(object):
         print image1, image2, image3
         self.play_song(currentTrackName, currentArtist)
         return simplejson.dumps(dict(currentTrack=currentTrackName, currentArtistName=currentArtist,currentArtistImage=currentImageURL,simArtist1Name=similarArtists[0].name,simArtist1Image=image1['url'],simArtist2Name=similarArtists[1].name,simArtist2Image=image2['url'],simArtist3Name=similarArtists[2].name,simArtist3Image=image3['url']))
+=======
+        #print currentTrackName, currentArtist
+        image1=similarArtists[0].get_images(results=50)
+        random.shuffle(image1)
+        image2=similarArtists[1].get_images(results=50)
+        random.shuffle(image2)
+        image3=similarArtists[2].get_images(results=50)
+        random.shuffle(image3)
+        #print image1, image2, image3
+        return simplejson.dumps(dict(currentTrack=currentTrackName, currentArtistName=currentArtist,currentArtistImage=currentImageURL,simArtist1Name=similarArtists[0].name,simArtist1Image=image1[0]['url'],simArtist2Name=similarArtists[1].name,simArtist2Image=image2[0]['url'],simArtist3Name=similarArtists[2].name,simArtist3Image=image3[0]['url']))
+>>>>>>> loading gif for loading up similar artists info
 
     def play_song(self, track_name, artist_name):
         yt_service = gdata.youtube.service.YouTubeService()
@@ -179,9 +197,15 @@ class Audite(object):
 
 
 config = {'/html':
-                {'tools.staticdir.on': True,
-                 'tools.staticdir.dir': MEDIA_DIR,
-                }
+                {
+                'tools.staticdir.on': True,
+                'tools.staticdir.dir': HTML_DIR,
+                },
+           '/static':
+           		{
+           		'tools.staticdir.on': True,
+				'tools.staticdir.dir': STATIC_DIR,
+           		}
         }
 
 #print cherrypy.engine.signal_handler.signals

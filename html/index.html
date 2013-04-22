@@ -170,6 +170,14 @@
       letter-spacing: -1px;
     }
 
+    .loading {
+      background-color: #5a5a5a;
+      background:  no-repeat
+      center center;
+      height: 10px;
+      width: 10px;
+    }
+
 
 
     /* RESPONSIVE CSS
@@ -226,7 +234,6 @@
       }
       .carousel img {
         height: 300px;
-        -webkit-filter: blur(1px)
       }
       .carousel-caption {
         width: 65%;
@@ -290,6 +297,13 @@
       $("#search-form").submit(function() { 
           // post the form values via AJAX…
           var postdata = {search_artist: $("#artist").val()} ;
+          loadimg="/static/img/ajax-loader.gif"
+          document.getElementById("artist1").setAttribute("style","-webkit-filter: blur(0px);");
+          document.getElementById("artist2").setAttribute("style","-webkit-filter: blur(0px)");
+          document.getElementById("artist3").setAttribute("style","-webkit-filter: blur(0px)");
+          $("#simArtist1Image").attr("src", loadimg);
+          $("#simArtist2Image").attr("src", loadimg);
+          $("#simArtist3Image").attr("src", loadimg);
           $.post('/submit', postdata, function(data) {
               // and set the title with the result
               $("#currentArtistName").html(data['currentArtistName']) ;
@@ -301,9 +315,6 @@
               $("#simArtist1Image").attr("src", data['simArtist1Image']);
               $("#simArtist2Image").attr("src", data['simArtist2Image']);
               $("#simArtist3Image").attr("src", data['simArtist3Image']);
-              document.getElementById("artist1").setAttribute("style","-webkit-filter: blur(0px)");
-              document.getElementById("artist2").setAttribute("style","-webkit-filter: blur(0px)");
-              document.getElementById("artist3").setAttribute("style","-webkit-filter: blur(0px)");
              });
           return false;
           });
@@ -372,7 +383,7 @@
               ">
             </a>
           </div>
-          <h3 id="simArtist1Name"></h3>
+          <h4 id="simArtist1Name"></h4>
         </div><!-- /.span4 -->
         <div class="span4">
           <div id="artist2">
@@ -388,27 +399,28 @@
               ">
             </a>
           </div>
-          <h3 id="simArtist2Name"></h3>
+          <h4 id="simArtist2Name"></h4>
         </div><!-- /.span4 -->
         <div class="span4">
           <div id="artist3">
-            <a href="javascript:choose_song(3)">
-              <img id="simArtist3Image" class="img-polaroid" style="
-                width: 240px;
-                height: 240px;
-                background-size: cover;
-                background-image: "";
-                background-repeat: no-repeat;
-                background-position: 50% 50%;
-                float:left;
-              ">
-            </a>
+              <a href="javascript:choose_song(3)">
+                <img id="simArtist3Image" class="img-polaroid" style="
+                  width: 240px;
+                  height: 240px;
+                  background-size: cover;
+                  background-image: "";
+                  background-repeat: no-repeat;
+                  background-position: 50% 50%;
+                  float:left;
+                ">
+              </a>
           </div>
-          <h3 id="simArtist3Name"></h3>
+          <h4 id="simArtist3Name"></h4>
         </div><!-- /.span4 -->
       </div><!-- /.row -->
 
       <footer>
+        <p class="pull-right">powered by Echonest</p>
         <p>Taylor Seale & Iheanyi Ekechukwu</p>
       </footer>
 
