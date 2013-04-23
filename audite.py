@@ -167,7 +167,7 @@ class Audite(object):
 
         for e in cleanURLs:
             print mime + " " + e
-            return simplejson.dumps(dict(streamURL=e))
+            return e
         # if("signature=" in contentDecoded):
         #     print "From conditional"
         #     print contentDecoded
