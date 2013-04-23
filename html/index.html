@@ -319,12 +319,24 @@
               $("#simArtist2Image").attr("src", data['simArtist2Image']);
               $("#simArtist3Image").attr("src", data['simArtist3Image']);
               // I used this variable to test
-              //streamURL="http://r14---sn-vgqelnez.c.youtube.com/videoplayback?sparams=cp,gcr,id,ip,ipbits,itag,ratebypass,source,upn,expire&gcr=us&expire=1366754215&ipbits=8&upn=gOCOSfa_u8E&mt=1366732631&id=o-AP1feZNhvGtfZKI5WFFv_O6xVw8XELLqc-RUbN4aX4k7&newshard=yes&key=yt1&ip=66.254.224.214&fexp=923418,912300,911632,933100,916626,932000,932004,906383,916911,916910,902000,901208,919512,929903,925714,929119,931202,900821,900823,909419,911416,908529,930807,919373,930803,906836,920201,929602,930101,930609,926403,900824,912711,910075&itag=18&sver=3&mv=m&source=youtube&ms=nxu&ratebypass=yes&cp=U0hVS1dQUl9GT0NONV9PSlZDOmhZZDkwMXRxVXRs&signature=C5C7FB861D0B3202D21CDC6797762508BE4BF16D.C987DADA97E00F6174E0B523009686E381AF66D8&fallback_host=tc.v20.cache6.c.youtube.com&redirect_counter=1&cms_redirect=yes"
-              $("#streamURL").attr("src", data['streamURL']).detach().appendTo("#audioplayer");
+              streamURL="http://r13---sn-vgqelnez.c.youtube.com/videoplayback?ms=nxu&id=o-AKAqo-sq1tm1sZ8U1U4eIZtB-r-YqYv7pu5Ckuzoms7n&ratebypass=yes&mv=m&mt=1366735992&expire=1366756210&sver=3&sparams=cp,id,ip,ipbits,itag,ratebypass,source,upn,expire&ipbits=8&source=youtube&newshard=yes&cp=U0hVS1dQVF9GSkNONV9PSlhDOkdEUkU4dndUOTIy&upn=5oETVUZWQro&ip=66.254.224.214&key=yt1&fexp=911413,932000,932004,906383,916911,916910,902000,901208,919512,929903,925714,929119,931202,900821,900823,909419,911416,908529,930807,919373,930803,906836,920201,929602,930101,930609,926403,900824,912711,910075&itag=18&signature=267D2598D4C1013BF50B9CC5DC8A8045FE5EE52E.443B9766B5F1471EC170230BBFCCA2CDD01E7CBA&fallback_host=tc.v18.cache5.c.youtube.com&redirect_counter=1&cms_redirect=yes"
+              $("#streamURL").attr("src", streamURL).detach().appendTo("#audioplayer");
              });
           return false;
           });
       });
+  </script>
+  <script>
+  function audio_play_pause() {
+    var myAudio = document.getElementById("audioplayer");
+    if (myAudio.paused) {
+      myAudio.play();
+      $("#paused").html("");
+    } else {
+      myAudio.pause();
+      $("#paused").html("Paused");
+    }
+  }
   </script>
   </head>
 
@@ -359,11 +371,12 @@
     <div id="myCarousel" class="carousel slide">
       <div class="carousel-inner">
         <div class="item active">
-          <img id="currentArtistImage" alt="">
+          <img id="currentArtistImage" alt="" onclick="audio_play_pause()">
           <div class="container">
             <div class="carousel-caption center">
               <h1 id="currentTrack"></h1>
               <p id="currentArtistName" class="lead"></p>
+              <h1 id="paused"></h1>
             </div>
           </div>
         </div>
