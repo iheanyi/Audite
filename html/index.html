@@ -319,8 +319,7 @@
               $("#simArtist2Image").attr("src", data['simArtist2Image']);
               $("#simArtist3Image").attr("src", data['simArtist3Image']);
               // I used this variable to test
-             streamURL = data['streamURL'];
-              $("#streamURL").attr("src", streamURL).detach().appendTo("#audioplayer");
+              $("#streamURL").attr("src", data['streamURL']).detach().appendTo("#audioplayer");
              });
           return false;
           });
