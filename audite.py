@@ -45,7 +45,7 @@ class Audite(object):
         random.shuffle(tracks)
         if(len(tracks)== 0):
 
-            tracks = song.search(artist =search_artist, results=10)
+            tracks = song.search(artist=search_artist, results=10)
 
             if(len(tracks) == 0):
                 currentTrackName = "No Track Found!"
@@ -68,12 +68,13 @@ class Audite(object):
         #print image1, image2, image3
 
         self.play_song(currentTrackName, currentArtist)
-        return simplejson.dumps(dict(currentTrack=currentTrackName, currentArtistName=currentArtist,currentArtistImage=currentImageURL,simArtist1Name=similarArtists[0].name,simArtist1Image=image1[0]['url'],simArtist2Name=similarArtists[1].name,simArtist2Image=image2[0]['url'],simArtist3Name=similarArtists[2].name,simArtist3Image=image3[0]['url']))
+        return simplejson.dumps(dict(currentTrack=currentTrackName,currentArtistName=currentArtist,currentArtistImage=currentImageURL,simArtist1Name=similarArtists[0].name,simArtist1Image=image1[0]['url'],simArtist2Name=similarArtists[1].name,simArtist2Image=image2[0]['url'],simArtist3Name=similarArtists[2].name,simArtist3Image=image3[0]['url']))
 
     def play_song(self, track_name, artist_name):
         yt_service = gdata.youtube.service.YouTubeService()
         query = gdata.youtube.service.YouTubeVideoQuery()
-        query.vq = track_name + artist_name
+        query.vq = track_name + " " +  artist_name
+        print query.vq
         query.orderby = 'relevance'
         query.start_index = 1
         query.max_results = 10
@@ -81,6 +82,7 @@ class Audite(object):
         feed = yt_service.YouTubeQuery(query)
         song = feed.entry[0]
         streamURL = song.media.player.url
+        print streamURL
         #print streamURL
 
         self.getYouTubeHTML(streamURL)
@@ -147,7 +149,7 @@ class Audite(object):
         if(match):
             qualities = matcher.split(content)
            #qualities = content.split(',')
-            print qualities[0:5]
+            #print qualities[0:5]
             self.buildLinks(qualities[0], 1)
 
     def buildLinks(self, block, i):
