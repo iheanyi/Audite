@@ -68,6 +68,12 @@ class Audite(object):
         #print image1, image2, image3
 
         streamLink = self.play_song(currentTrackName, currentArtist)
+
+
+        if(streamLink is None):
+            print "No stream link found, so we are going to start over . .  ."
+            self.submit(search_artist)
+
         print "Stream link getting returned is: " + streamLink
         return simplejson.dumps(dict(currentTrack=currentTrackName,currentArtistName=currentArtist,currentArtistImage=currentImageURL,simArtist1Name=similarArtists[0].name,simArtist1Image=image1[0]['url'],simArtist2Name=similarArtists[1].name,simArtist2Image=image2[0]['url'],simArtist3Name=similarArtists[2].name,simArtist3Image=image3[0]['url'],streamURL=streamLink))
 
@@ -123,7 +129,10 @@ class Audite(object):
         cleanURLs = []
         for each in qualities:
             #print each
+            if("video/mp4" in each):
 
+                print "Checking if video/mp4 junts in there."
+                print each
             each = each.split(";+codecs=")[0]
             #print str(i) + ":" + qualities[i]
 
@@ -134,9 +143,10 @@ class Audite(object):
 
             
 
-            if(("video/mp4" in each and "sig=" in each) or ("sig=" in each and "video/3gpp" in each)):
+            if(("video/mp4" in each and "sig=" in each)): # or ("sig=" in each and "video/3gpp" in each)):
                 #print each
                 sigMatcher = sigPattern.search(each)
+                print "Valid URL!"
                 print each
                 if(sigMatcher):
                     print sigMatcher.group()
@@ -148,9 +158,10 @@ class Audite(object):
                         print "Signature already there."
                         contentDecoded = url
                     else:
-                        print "Appending signature"
-                        contentDecoded = url + "&" + sigMatcher.group()
-                    contentDecoded = contentDecoded.replace("x-flv", "flv")
+                        print "Signature not there."
+                        #print "Appending signature"
+                        #contentDecoded = url + "&" + sigMatcher.group()
+                    #contentDecoded = contentDecoded.replace("x-flv", "flv")
                     #contentDecoded = re.sub(r'sig=[0-9A-Z]{40}\.[0-9A-Z]{40}.*', sigMatcher.group(), contentDecoded)
                     contentDecoded = contentDecoded.replace("sig=", "signature=")
                     print "FINAL URL"
@@ -166,8 +177,12 @@ class Audite(object):
         print "PRINTING CLEAN URLS"
 
         for e in cleanURLs:
-            print mime + " " + e
-            return e
+            #print mime + " " + e
+            if("itag=34" not in e and "itag=35" not in e):
+                return e
+            else:
+                print "Failed some test that I had . . . "
+
         # if("signature=" in contentDecoded):
         #     print "From conditional"
         #     print contentDecoded
