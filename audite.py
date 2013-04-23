@@ -290,16 +290,11 @@ config = {'/html':
            		{
            		'tools.staticdir.on': True,
 				'tools.staticdir.dir': STATIC_DIR,
-           		}
+           		},
+            'global':
+                {
+                'server.socket_host':'0.0.0.0',
+                },
         }
 
-#print cherrypy.engine.signal_handler.signals
-
-
-#cherrypy.tree.mount(Audite(), '/', config=config)
 cherrypy.quickstart(Audite(), '/', config=config)
-#cherrypy.engine.start()
-# if hasattr(cherrypy.engine, 'signal_handler'):
-#     cherrypy.engine.signal_handler.subscribe()
-#     cherrypy.engine.signal_handler(2)
-
