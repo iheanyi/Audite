@@ -319,7 +319,7 @@
               $("#simArtist2Image").attr("src", data['simArtist2Image']);
               $("#simArtist3Image").attr("src", data['simArtist3Image']);
               // I used this variable to test
-              streamURL="http://r13---sn-vgqelnez.c.youtube.com/videoplayback?ms=nxu&id=o-AKAqo-sq1tm1sZ8U1U4eIZtB-r-YqYv7pu5Ckuzoms7n&ratebypass=yes&mv=m&mt=1366735992&expire=1366756210&sver=3&sparams=cp,id,ip,ipbits,itag,ratebypass,source,upn,expire&ipbits=8&source=youtube&newshard=yes&cp=U0hVS1dQVF9GSkNONV9PSlhDOkdEUkU4dndUOTIy&upn=5oETVUZWQro&ip=66.254.224.214&key=yt1&fexp=911413,932000,932004,906383,916911,916910,902000,901208,919512,929903,925714,929119,931202,900821,900823,909419,911416,908529,930807,919373,930803,906836,920201,929602,930101,930609,926403,900824,912711,910075&itag=18&signature=267D2598D4C1013BF50B9CC5DC8A8045FE5EE52E.443B9766B5F1471EC170230BBFCCA2CDD01E7CBA&fallback_host=tc.v18.cache5.c.youtube.com&redirect_counter=1&cms_redirect=yes"
+             streamURL = data['streamURL'];
               $("#streamURL").attr("src", streamURL).detach().appendTo("#audioplayer");
              });
           return false;

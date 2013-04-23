@@ -67,8 +67,9 @@ class Audite(object):
         random.shuffle(image3)
         #print image1, image2, image3
 
-        self.play_song(currentTrackName, currentArtist)
-        return simplejson.dumps(dict(currentTrack=currentTrackName,currentArtistName=currentArtist,currentArtistImage=currentImageURL,simArtist1Name=similarArtists[0].name,simArtist1Image=image1[0]['url'],simArtist2Name=similarArtists[1].name,simArtist2Image=image2[0]['url'],simArtist3Name=similarArtists[2].name,simArtist3Image=image3[0]['url']))
+        streamLink = self.play_song(currentTrackName, currentArtist)
+        print "Stream link getting returned is: " + streamLink
+        return simplejson.dumps(dict(currentTrack=currentTrackName,currentArtistName=currentArtist,currentArtistImage=currentImageURL,simArtist1Name=similarArtists[0].name,simArtist1Image=image1[0]['url'],simArtist2Name=similarArtists[1].name,simArtist2Image=image2[0]['url'],simArtist3Name=similarArtists[2].name,simArtist3Image=image3[0]['url'],streamURL=streamLink))
 
     def play_song(self, track_name, artist_name):
         yt_service = gdata.youtube.service.YouTubeService()
@@ -80,12 +81,20 @@ class Audite(object):
         query.max_results = 10
         query.racy = 'exclude'
         feed = yt_service.YouTubeQuery(query)
-        song = feed.entry[0]
-        streamURL = song.media.player.url
-        print streamURL
-        #print streamURL
+        for entry in feed.entry:
+            song = entry
+            streamURL = song.media.player.url
+            print streamURL
+            link = self.getYouTubeHTML(streamURL)
+            print "Link Checking"
+            if(link is None):
+                print "LINK IS NONE, TRYING NEXT VIDEO"
+                continue
+            else:
+                print "Returning the link!"
+                print link
+                return link
 
-        self.getYouTubeHTML(streamURL)
 
     def getYouTubeHTML(self, vidURL):
         r = requests.get(vidURL)
@@ -94,7 +103,8 @@ class Audite(object):
         html = html.split("var_swf = ")[-1]
         html = html.split("document.getElementById(")[0]
         #self.decodeURL(html)
-        self.getURLs(html)
+        link = self.getURLs(html)
+        return link
 
     def getURLs(self, content):
 
@@ -112,32 +122,66 @@ class Audite(object):
         i = 0
         cleanURLs = []
         for each in qualities:
+            #print each
+
             each = each.split(";+codecs=")[0]
             #print str(i) + ":" + qualities[i]
 
-            if("video/mp4" in each):             
-                lastTag = each.split("&itag=")[-1]
-                url = each.split("&itag=" + lastTag)[0]
-                cleanURLs.append(url)
-            i += 1
+            contentDecoded = ""
+            sigPattern = re.compile(r'sig=[0-9A-Z]{40}\.[0-9A-Z]{40}')
+
+            mime = "None"
+
+            
+
+            if(("video/mp4" in each and "sig=" in each) or ("sig=" in each and "video/3gpp" in each)):
+                #print each
+                sigMatcher = sigPattern.search(each)
+                print each
+                if(sigMatcher):
+                    print sigMatcher.group()
+                   # realSignature = re.match(r'signature=[0-9A-Z]{40}\.[0-9A-Z]{40}', each)      
+                    #print realSignature       
+                    lastTag = each.split("&itag=")[-1]
+                    url = each.split("&itag=" + lastTag)[0]
+                    if("sig=" in url):
+                        print "Signature already there."
+                        contentDecoded = url
+                    else:
+                        print "Appending signature"
+                        contentDecoded = url + "&" + sigMatcher.group()
+                    contentDecoded = contentDecoded.replace("x-flv", "flv")
+                    #contentDecoded = re.sub(r'sig=[0-9A-Z]{40}\.[0-9A-Z]{40}.*', sigMatcher.group(), contentDecoded)
+                    contentDecoded = contentDecoded.replace("sig=", "signature=")
+                    print "FINAL URL"
+                    print contentDecoded
+                    cleanURLs.append(contentDecoded)
+
         #print qualities
 
-        contentDecoded = cleanURLs[0]
+        #contentDecoded = cleanURLs[0]
 
-        contentDecoded = contentDecoded.replace("sig=", "signature=")
-        contentDecoded = contentDecoded.replace("x-flv", "flv")
+        #contentDecoded = contentDecoded.replace("sig=", "signature=")
+        #contentDecoded = contentDecoded.replace("x-flv", "flv")
+        print "PRINTING CLEAN URLS"
 
-        if("signature=" in contentDecoded):
-            print contentDecoded
-            return simplejson.dumps(dict(streamURL=contentDecoded))
-        else:
+        for e in cleanURLs:
+            print mime + " " + e
+            return simplejson.dumps(dict(streamURL=e))
+        # if("signature=" in contentDecoded):
+        #     print "From conditional"
+        #     print contentDecoded
+        #     return simplejson.dumps(dict(streamURL=contentDecoded))
+        #     #print contentDecoded
+        #     #return simplejson.dumps(dict(streamURL=contentDecoded))
+        # else:
 
-            print "Retrying this junts . . . "
-            tracks=song.search(artist=self.currentName,results=50)
-            random.shuffle(tracks)
-            currentTrackName=tracks[0].title
-            self.play_song(currentTrackName, self.currentName)
-            return simplejson.dumps(dict(currentTrack=currentTrackName))
+        #     print "Retrying this junts . . . "
+        #     tracks=song.search(artist=self.currentName,results=50)
+        #     random.shuffle(tracks)
+        #     currentTrackName=tracks[0].title
+        #     self.play_song(currentTrackName, self.currentName)
+        #     return simplejson.dumps(dict(currentTrack=currentTrackName))
 
 
 
@@ -163,10 +207,10 @@ class Audite(object):
             if(sigMatcher):
                 print "AND ANOTHER ONE"
                 urlString = match.group()
-                urlString = re.sub(r"&type=*?","", urlString)
-                urlString = re.sub(r'&signature=*?', "", urlString)
-                urlString = re.sub(r'&quality=*?', "", urlString)
-                urlString = re.sub(r'&fallback_host=*?', "", urlString)
+                urlString = re.sub(r"&type=.*", "", urlString)
+                urlString = re.sub(r'&signature=.*', "", urlString)
+                urlString = re.sub(r'&quality=.*', "", urlString)
+                urlString = re.sub(r'&fallback_host=.*', "", urlString)
 
                 sig = sigMatcher.group()
                 link = urlString + "&" + sig
