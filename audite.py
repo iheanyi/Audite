@@ -43,19 +43,7 @@ class Audite(object):
         tracks=song.search(artist=search_artist,song_min_hotttnesss=0.5,results=50)
         self.currentName = search_artist
         random.shuffle(tracks)
-        if(len(tracks)== 0):
-
-            tracks = song.search(artist=search_artist, results=10)
-
-            if(len(tracks) == 0):
-                currentTrackName = "No Track Found!"
-
-            else:
-                currentTrackName = tracks[0].title
-
-
-        else:
-            currentTrackName=tracks[0].title
+     
 
         currentArtist = artist.Artist(search_artist).name
         #print currentTrackName, currentArtist
@@ -67,15 +55,36 @@ class Audite(object):
         random.shuffle(image3)
         #print image1, image2, image3
 
+        if(len(tracks)== 0):
+
+            tracks = song.search(artist=search_artist, results=10)
+
+            if(len(tracks) == 0):
+                currentTrackName = "No Track Found!"
+
+            else:
+                currentTrackName = tracks[0].title
+        else:
+            currentTrackName=tracks[0].title
+
+        for t in tracks:
+            streamLink = self.play_song(t.title, currentArtist)
+
+            if(streamLink is None or streamLink is ""):
+                continue
+            else:
+                print "Stream link getting returned is: " + streamLink
+                return simplejson.dumps(dict(currentTrack=currentTrackName,currentArtistName=currentArtist,currentArtistImage=currentImageURL,simArtist1Name=similarArtists[0].name,simArtist1Image=image1[0]['url'],simArtist2Name=similarArtists[1].name,simArtist2Image=image2[0]['url'],simArtist3Name=similarArtists[2].name,simArtist3Image=image3[0]['url'],streamURL=streamLink))
+ 
         streamLink = self.play_song(currentTrackName, currentArtist)
 
 
-        if(streamLink is None):
-            print "No stream link found, so we are going to start over . .  ."
-            self.submit(search_artist)
-
-        print "Stream link getting returned is: " + streamLink
-        return simplejson.dumps(dict(currentTrack=currentTrackName,currentArtistName=currentArtist,currentArtistImage=currentImageURL,simArtist1Name=similarArtists[0].name,simArtist1Image=image1[0]['url'],simArtist2Name=similarArtists[1].name,simArtist2Image=image2[0]['url'],simArtist3Name=similarArtists[2].name,simArtist3Image=image3[0]['url'],streamURL=streamLink))
+        # if(streamLink is None or streamLink is ""):
+        #     print "No stream link found, so we are going to start over . .  ."
+        #     self.submit(currentArtist)
+        # else:
+        #     print "Stream link getting returned is: " + streamLink
+        #     return simplejson.dumps(dict(currentTrack=currentTrackName,currentArtistName=currentArtist,currentArtistImage=currentImageURL,simArtist1Name=similarArtists[0].name,simArtist1Image=image1[0]['url'],simArtist2Name=similarArtists[1].name,simArtist2Image=image2[0]['url'],simArtist3Name=similarArtists[2].name,simArtist3Image=image3[0]['url'],streamURL=streamLink))
 
     def play_song(self, track_name, artist_name):
         yt_service = gdata.youtube.service.YouTubeService()
@@ -178,7 +187,7 @@ class Audite(object):
 
         for e in cleanURLs:
             #print mime + " " + e
-            if("itag=34" not in e and "itag=35" not in e):
+            if("fallback_host" in e and "itag=46" not in e and "itag=34" not in e and "itag=35" not in e and "itag=45" not in e):
                 return e
             else:
                 print "Failed some test that I had . . . "
