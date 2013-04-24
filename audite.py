@@ -10,7 +10,6 @@ from pyechonest import config
 import random
 import gdata.youtube
 import gdata.youtube.service
-from BeautifulSoup import BeautifulSoup
 import requests
 import base64
 import struct
