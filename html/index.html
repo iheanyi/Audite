@@ -351,6 +351,11 @@
       });
   </script>
   <script>
+    document.getElementById('audioplayer').addEventListener('ended', function(){
+      alert("song ended");
+    }, false);
+  </script>
+  <script>
   function audio_play_pause() {
     var myAudio = document.getElementById("audioplayer");
     if (myAudio.paused) {
@@ -495,7 +500,7 @@
 </script>
 
 <script>
-  $('a[data-slide="next"]').click(function() {
+  $('a[data-slide="next"]').click(function next_song() {
     document.getElementById("artist1").setAttribute("style","-webkit-filter: blur(0px);");
     document.getElementById("artist2").setAttribute("style","-webkit-filter: blur(0px)");
     document.getElementById("artist3").setAttribute("style","-webkit-filter: blur(0px)");
@@ -527,6 +532,40 @@
     $("#simArtist2Image").attr("src", nextSim2Image);
     $("#simArtist3Image").attr("src", nextSim3Image);
   });
+</script>
+<script>
+  document.getElementById('audioplayer').addEventListener('ended', function(){
+    document.getElementById("artist1").setAttribute("style","-webkit-filter: blur(0px);");
+    document.getElementById("artist2").setAttribute("style","-webkit-filter: blur(0px)");
+    document.getElementById("artist3").setAttribute("style","-webkit-filter: blur(0px)");
+    $("#simArtist1Name").html("") ;
+    $("#simArtist2Name").html("") ;
+    $("#simArtist3Name").html("") ;
+    $("#simArtist1Image").attr("src", loadimg);
+    $("#simArtist2Image").attr("src", loadimg);
+    $("#simArtist3Image").attr("src", loadimg);
+    $('#myCarousel').carousel('next');
+    // swap all the divs as necessary
+    document.getElementById('currentArtistImage').id = 'temp';
+    document.getElementById('nextArtistImage').id = 'currentArtistImage';
+    document.getElementById('temp').id = 'nextArtistImage';
+    document.getElementById('currentTrack').id = 'temp';
+    document.getElementById('nextTrack').id = 'currentTrack';
+    document.getElementById('temp').id = 'nextTrack';
+    document.getElementById('currentArtistName').id = 'temp';
+    document.getElementById('nextArtistName').id = 'currentArtistName';
+    document.getElementById('temp').id = 'nextArtistName';
+    document.getElementById('paused').id = 'temp';
+    document.getElementById('off').id = 'paused';
+    document.getElementById('temp').id = 'off';
+    $("#streamURL").attr("src", nextStreamURL).detach().appendTo("#audioplayer");
+    $("#simArtist1Name").html(nextSim1) ;
+    $("#simArtist2Name").html(nextSim2) ;
+    $("#simArtist3Name").html(nextSim3) ;
+    $("#simArtist1Image").attr("src", nextSim1Image);
+    $("#simArtist2Image").attr("src", nextSim2Image);
+    $("#simArtist3Image").attr("src", nextSim3Image);
+  }, false);
 </script>
   </body>
 </html>
