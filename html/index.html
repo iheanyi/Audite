@@ -410,7 +410,7 @@
             <div class="carousel-caption center">
               <h1 id="nextTrack"></h1>
               <p id="nextArtistName" class="lead"></p>
-              <h1 id="paused"></h1>
+              <h1 id="off"></h1>
             </div>
           </div>
         </div>
@@ -506,6 +506,19 @@
     $("#simArtist2Image").attr("src", loadimg);
     $("#simArtist3Image").attr("src", loadimg);
     $('#myCarousel').carousel('next');
+    // swap all the divs as necessary
+    document.getElementById('currentArtistImage').id = 'temp';
+    document.getElementById('nextArtistImage').id = 'currentArtistImage';
+    document.getElementById('temp').id = 'nextArtistImage';
+    document.getElementById('currentTrack').id = 'temp';
+    document.getElementById('nextTrack').id = 'currentTrack';
+    document.getElementById('temp').id = 'nextTrack';
+    document.getElementById('currentArtistName').id = 'temp';
+    document.getElementById('nextArtistName').id = 'currentArtistName';
+    document.getElementById('temp').id = 'nextArtistName';
+    document.getElementById('paused').id = 'temp';
+    document.getElementById('off').id = 'paused';
+    document.getElementById('temp').id = 'off';
     $("#streamURL").attr("src", nextStreamURL).detach().appendTo("#audioplayer");
     $("#simArtist1Name").html(nextSim1) ;
     $("#simArtist2Name").html(nextSim2) ;
