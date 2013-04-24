@@ -344,7 +344,6 @@
               $("#simArtist1Image").attr("src", data['simArtist1Image']);
               $("#simArtist2Image").attr("src", data['simArtist2Image']);
               $("#simArtist3Image").attr("src", data['simArtist3Image']);
-              // I used this variable to test
               $("#streamURL").attr("src", data['streamURL']).detach().appendTo("#audioplayer");
              });
           return false;
@@ -379,7 +378,7 @@
           <div class="navbar-inner">
             <a class="brand" href="#">What's Next?</a>
             <div style="display: inline-block;" class="pull-right">
-              <form id="search-form" action="#" method="post" class="navbar-search">
+              <form id="search-form" action="#" method="post" class="navbar-search" onClick="cleartext()">
                 <input type="text" id="artist" class="search-query" placeholder="Choose an artist...">
               </form>
             </div>
