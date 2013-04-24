@@ -31,7 +31,7 @@ class Audite(object):
         return open(os.path.join(HTML_DIR, u'index.html'))
 
     @cherrypy.expose
-    def submit(self,search_artist):
+    def search(self,search_artist):
         cherrypy.response.headers['Content-Type'] = 'application/json'
         #similar.append(artist.Artist(search_artist))
         #print similar
