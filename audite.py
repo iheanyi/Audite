@@ -69,6 +69,7 @@ class Audite(object):
 
         for t in tracks:
             streamLink = self.play_song(t.title, currentArtist)
+            currentTrackName = t.title
 
             if(streamLink is None or streamLink is ""):
                 continue
@@ -187,7 +188,14 @@ class Audite(object):
 
         for e in cleanURLs:
             #print mime + " " + e
-            if("fallback_host" in e and "itag=46" not in e and "itag=34" not in e and "itag=35" not in e and "itag=45" not in e):
+            if("fallback_host" in e 
+                and "itag=22" not in e
+                and "itag=43" not in e
+                and "itag=102" not in e 
+                and "itag=46" not in e 
+                and "itag=34" not in e 
+                and "itag=35" not in e 
+                and "itag=45" not in e):
                 return e
             else:
                 print "Failed some test that I had . . . "
