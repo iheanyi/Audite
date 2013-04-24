@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>What's Next... Listen Up</title>
+    <title>Audite... Listen Up</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Paradigms Project">
     <meta name="author" content="Taylor Seale & Iheanyi Ekechukwu">
@@ -10,6 +10,7 @@
     <!-- Le styles -->
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="/static/introjs.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <style>
 
@@ -373,22 +374,22 @@
   </script>
   </head>
 
-  <body>    
+  <body onload='javascript:introJs().start();'>    
     <audio id="audioplayer" autoplay>
       <source id="streamURL" type="audio/mpeg">
     </audio>
 
     <!-- NAVBAR
     ================================================== -->
-    <div class="navbar-wrapper">
+    <div class="navbar-wrapper" >
       <!-- Wrap the .navbar in .container to center it within the absolutely positioned parent. -->
-      <div class="container">
-        <div class="navbar navbar-inverse">
-          <div class="navbar-inner">
-            <a class="brand" href="#">What's Next?</a>
+      <div class="container" >
+        <div class="navbar navbar-inverse" >
+          <div class="navbar-inner" >
+            <a class="brand" data-step='1' data-intro="Welcome to Audite! Let's have a look around..." data-position='bottom' href="#">Audite</a>
             <div style="display: inline-block;" class="pull-right">
-              <form id="search-form" action="#" method="post" class="navbar-search" onClick="cleartext()">
-                <input type="text" id="artist" class="search-query" placeholder="Choose an artist...">
+              <form id="search-form" action="#" method="post" class="navbar-search">
+                <input data-step='7' data-intro="Search for an artist to get started. Enjoy!" data-position='bottom' type="text" id="artist" class="search-query" placeholder="Choose an artist...">
               </form>
             </div>
           </div><!-- /.navbar-inner -->
@@ -402,13 +403,13 @@
     <!-- Carousel
     ================================================== -->
     <div id="myCarousel" class="carousel slide">
-      <div class="carousel-inner">
+      <div class="carousel-inner" >
         <div class="item active"  onclick="audio_play_pause()">
-          <img id="currentArtistImage" alt="">
+          <img id="currentArtistImage" src="/static/img/girltalk.jpg" alt="">
           <div class="container">
             <div class="carousel-caption center">
-              <h1 id="currentTrack"></h1>
-              <p id="currentArtistName" class="lead"></p>
+              <h1 id="currentTrack">That's My DJ</h1>
+              <p id="currentArtistName" class="lead" data-step='2' data-intro="Your song plays here. Click the image to pause/play." data-position='bottom'>Girl Talk</p>
               <h1 id="paused"></h1>
             </div>
           </div>
@@ -424,7 +425,7 @@
           </div>
         </div>
       </div>
-      <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next" data-step='3' data-intro="Or hit the arrow to bounce to the next track" data-position='left'>&rsaquo;</a>
     </div><!-- /.carousel -->
 
 
@@ -433,11 +434,11 @@
     <!-- Wrap the rest of the page in another container to center all the content. -->
     <div class="container marketing">
       <!-- Three columns of text below the carousel -->      
-      <div class="row">
+      <div class="row" data-step='3' data-intro="We automagically pick three similar artists to play next!" data-position='top'>
         <div class="span4">
           <div id="artist1">
             <a href="javascript:choose_song(1,1)">
-              <img id="simArtist1Image" class="img-polaroid" style="
+              <img data-step='4' data-intro="You can pick this one..." data-position='top' id="simArtist1Image" src="/static/img/hoodinternet.jpg" class="img-polaroid" style="
                 width: 240px;
                 height: 240px;
                 background-size: cover;
@@ -448,12 +449,12 @@
               ">
             </a>
           </div>
-          <h4 id="simArtist1Name"></h4>
+          <h4 id="simArtist1Name">The Hood Internet</h4>
         </div><!-- /.span4 -->
         <div class="span4">
           <div id="artist2">
             <a href="javascript:choose_song(2,1)">
-              <img id="simArtist2Image" class="img-polaroid" style="
+              <img data-step='5' data-intro="Or this one..." data-position='top' id="simArtist2Image" src="/static/img/e603.png" class="img-polaroid" style="
                 width: 240px;
                 height: 240px;
                 background-size: cover;
@@ -464,12 +465,12 @@
               ">
             </a>
           </div>
-          <h4 id="simArtist2Name"></h4>
+          <h4 id="simArtist2Name">E-603</h4>
         </div><!-- /.span4 -->
         <div class="span4">
           <div id="artist3">
               <a href="javascript:choose_song(3,1)">
-                <img id="simArtist3Image" class="img-polaroid" style="
+                <img data-step='6' data-intro="Or even this one! If you can't decide, we'll pick for you!" data-position='top' id="simArtist3Image" src="/static/img/whitepanda.jpg"class="img-polaroid" style="
                   width: 240px;
                   height: 240px;
                   background-size: cover;
@@ -480,7 +481,7 @@
                 ">
               </a>
           </div>
-          <h4 id="simArtist3Name"></h4>
+          <h4 id="simArtist3Name">White Panda</h4>
         </div><!-- /.span4 -->
       </div><!-- /.row -->
 
@@ -575,5 +576,6 @@
     choose_song(rand,0);
   }, false);
 </script>
+<script type="text/javascript" src="/static/intro.min.js"></script>
   </body>
 </html>
