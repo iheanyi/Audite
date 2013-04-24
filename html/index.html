@@ -278,26 +278,32 @@
     window.nextSim3="";
     window.nextSim1Image="";
     window.nextStreamURL="";
-    function choose_song(num){
+    function choose_song(num,who){
       var xb=document.getElementById("artist1");
       var yb=document.getElementById("artist2");
       var zb=document.getElementById("artist3");
       if (num==1){
-        xb.setAttribute("style","-webkit-filter: blur(0px)")
-        yb.setAttribute("style","-webkit-filter: blur(3px)")
-        zb.setAttribute("style","-webkit-filter: blur(3px)")
+        if(who==1){
+          xb.setAttribute("style","-webkit-filter: blur(0px)")
+          yb.setAttribute("style","-webkit-filter: blur(3px)")
+          zb.setAttribute("style","-webkit-filter: blur(3px)")
+        }
         nextArtist=document.getElementById("simArtist1Name").innerText;
       }
       else if (num==2){
-        xb.setAttribute("style","-webkit-filter: blur(3px)")
-        yb.setAttribute("style","-webkit-filter: blur(0px)")
-        zb.setAttribute("style","-webkit-filter: blur(3px)")
+        if (who==1){
+          xb.setAttribute("style","-webkit-filter: blur(3px)")
+          yb.setAttribute("style","-webkit-filter: blur(0px)")
+          zb.setAttribute("style","-webkit-filter: blur(3px)")
+        }
         nextArtist=document.getElementById("simArtist2Name").innerText;
       }
       else if (num==3){
-        xb.setAttribute("style","-webkit-filter: blur(3px)")
-        yb.setAttribute("style","-webkit-filter: blur(3px)")
-        zb.setAttribute("style","-webkit-filter: blur(0px)")
+        if (who==1){
+          xb.setAttribute("style","-webkit-filter: blur(3px)")
+          yb.setAttribute("style","-webkit-filter: blur(3px)")
+          zb.setAttribute("style","-webkit-filter: blur(0px)")
+        }
         nextArtist=document.getElementById("simArtist3Name").innerText;
       }
       var postdata = {search_artist: nextArtist};
@@ -346,17 +352,13 @@
               $("#simArtist3Image").attr("src", data['simArtist3Image']);
               $("#streamURL").attr("src", data['streamURL']).detach().appendTo("#audioplayer");
               var rand = Math.floor((Math.random()*3)+1);
-              choose_song(rand);
+              choose_song(rand,0);
              });
           return false;
           });
       });
   </script>
-  <script>
-    document.getElementById('audioplayer').addEventListener('ended', function(){
-      alert("song ended");
-    }, false);
-  </script>
+
   <script>
   function audio_play_pause() {
     var myAudio = document.getElementById("audioplayer");
@@ -434,7 +436,7 @@
       <div class="row">
         <div class="span4">
           <div id="artist1">
-            <a href="javascript:choose_song(1)">
+            <a href="javascript:choose_song(1,1)">
               <img id="simArtist1Image" class="img-polaroid" style="
                 width: 240px;
                 height: 240px;
@@ -450,7 +452,7 @@
         </div><!-- /.span4 -->
         <div class="span4">
           <div id="artist2">
-            <a href="javascript:choose_song(2)">
+            <a href="javascript:choose_song(2,1)">
               <img id="simArtist2Image" class="img-polaroid" style="
                 width: 240px;
                 height: 240px;
@@ -466,7 +468,7 @@
         </div><!-- /.span4 -->
         <div class="span4">
           <div id="artist3">
-              <a href="javascript:choose_song(3)">
+              <a href="javascript:choose_song(3,1)">
                 <img id="simArtist3Image" class="img-polaroid" style="
                   width: 240px;
                   height: 240px;
@@ -534,7 +536,7 @@
     $("#simArtist2Image").attr("src", nextSim2Image);
     $("#simArtist3Image").attr("src", nextSim3Image);
     var rand = Math.floor((Math.random()*3)+1);
-    choose_song(rand);
+    choose_song(rand,0);
   });
 </script>
 <script>
@@ -570,7 +572,7 @@
     $("#simArtist2Image").attr("src", nextSim2Image);
     $("#simArtist3Image").attr("src", nextSim3Image);
     var rand = Math.floor((Math.random()*3)+1);
-    choose_song(rand);
+    choose_song(rand,0);
   }, false);
 </script>
   </body>
