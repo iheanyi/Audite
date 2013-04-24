@@ -345,6 +345,8 @@
               $("#simArtist2Image").attr("src", data['simArtist2Image']);
               $("#simArtist3Image").attr("src", data['simArtist3Image']);
               $("#streamURL").attr("src", data['streamURL']).detach().appendTo("#audioplayer");
+              var rand = Math.floor((Math.random()*3)+1);
+              choose_song(rand);
              });
           return false;
           });
@@ -500,7 +502,7 @@
 </script>
 
 <script>
-  $('a[data-slide="next"]').click(function next_song() {
+  $('a[data-slide="next"]').click(function () {
     document.getElementById("artist1").setAttribute("style","-webkit-filter: blur(0px);");
     document.getElementById("artist2").setAttribute("style","-webkit-filter: blur(0px)");
     document.getElementById("artist3").setAttribute("style","-webkit-filter: blur(0px)");
@@ -531,6 +533,8 @@
     $("#simArtist1Image").attr("src", nextSim1Image);
     $("#simArtist2Image").attr("src", nextSim2Image);
     $("#simArtist3Image").attr("src", nextSim3Image);
+    var rand = Math.floor((Math.random()*3)+1);
+    choose_song(rand);
   });
 </script>
 <script>
@@ -565,6 +569,8 @@
     $("#simArtist1Image").attr("src", nextSim1Image);
     $("#simArtist2Image").attr("src", nextSim2Image);
     $("#simArtist3Image").attr("src", nextSim3Image);
+    var rand = Math.floor((Math.random()*3)+1);
+    choose_song(rand);
   }, false);
 </script>
   </body>
