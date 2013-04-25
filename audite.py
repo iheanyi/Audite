@@ -148,7 +148,6 @@ class Audite(object):
             contentDecoded = ""
             sigPattern = re.compile(r'sig=[0-9A-Z]{40}\.[0-9A-Z]{40}')
 
-            mime = "None"
 
             
 
