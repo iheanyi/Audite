@@ -359,7 +359,6 @@
           });
       });
   </script>
-
   <script>
   function audio_play_pause() {
     var myAudio = document.getElementById("audioplayer");
@@ -409,7 +408,7 @@
           <div class="container">
             <div class="carousel-caption center">
               <h1 id="currentTrack">That's My DJ</h1>
-              <p id="currentArtistName" class="lead" data-step='2' data-intro="Your song plays here. Click the image to pause/play." data-position='bottom'>Girl Talk</p>
+              <p id="currentArtistName" class="lead" data-step='2' data-intro="Your song plays here. Click the image to pause/play. Click the arrow to skip to the next track" data-position='bottom'>Girl Talk</p>
               <h1 id="paused"></h1>
             </div>
           </div>
@@ -425,7 +424,7 @@
           </div>
         </div>
       </div>
-      <a class="right carousel-control" href="#myCarousel" data-slide="next" data-step='3' data-intro="Or hit the arrow to bounce to the next track" data-position='left'>&rsaquo;</a>
+      <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
     </div><!-- /.carousel -->
 
 
@@ -499,83 +498,49 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
 <script src="/static/bootstrap.min.js"></script></script>
-
+<script type="text/javascript" src="/static/intro.min.js"></script>
 <script type="text/javascript">
      $('#myCarousel').carousel({interval: false})
 </script>
 
 <script>
-  $('a[data-slide="next"]').click(function () {
-    document.getElementById("artist1").setAttribute("style","-webkit-filter: blur(0px);");
-    document.getElementById("artist2").setAttribute("style","-webkit-filter: blur(0px)");
-    document.getElementById("artist3").setAttribute("style","-webkit-filter: blur(0px)");
-    $("#simArtist1Name").html("") ;
-    $("#simArtist2Name").html("") ;
-    $("#simArtist3Name").html("") ;
-    $("#simArtist1Image").attr("src", loadimg);
-    $("#simArtist2Image").attr("src", loadimg);
-    $("#simArtist3Image").attr("src", loadimg);
-    $('#myCarousel').carousel('next');
-    // swap all the divs as necessary
-    document.getElementById('currentArtistImage').id = 'temp';
-    document.getElementById('nextArtistImage').id = 'currentArtistImage';
-    document.getElementById('temp').id = 'nextArtistImage';
-    document.getElementById('currentTrack').id = 'temp';
-    document.getElementById('nextTrack').id = 'currentTrack';
-    document.getElementById('temp').id = 'nextTrack';
-    document.getElementById('currentArtistName').id = 'temp';
-    document.getElementById('nextArtistName').id = 'currentArtistName';
-    document.getElementById('temp').id = 'nextArtistName';
-    document.getElementById('paused').id = 'temp';
-    document.getElementById('off').id = 'paused';
-    document.getElementById('temp').id = 'off';
-    $("#streamURL").attr("src", nextStreamURL).detach().appendTo("#audioplayer");
-    $("#simArtist1Name").html(nextSim1) ;
-    $("#simArtist2Name").html(nextSim2) ;
-    $("#simArtist3Name").html(nextSim3) ;
-    $("#simArtist1Image").attr("src", nextSim1Image);
-    $("#simArtist2Image").attr("src", nextSim2Image);
-    $("#simArtist3Image").attr("src", nextSim3Image);
-    var rand = Math.floor((Math.random()*3)+1);
-    choose_song(rand,0);
-  });
+  function next_song() {
+      document.getElementById("artist1").setAttribute("style","-webkit-filter: blur(0px);");
+      document.getElementById("artist2").setAttribute("style","-webkit-filter: blur(0px)");
+      document.getElementById("artist3").setAttribute("style","-webkit-filter: blur(0px)");
+      $("#simArtist1Name").html("") ;
+      $("#simArtist2Name").html("") ;
+      $("#simArtist3Name").html("") ;
+      $("#simArtist1Image").attr("src", loadimg);
+      $("#simArtist2Image").attr("src", loadimg);
+      $("#simArtist3Image").attr("src", loadimg);
+      $('#myCarousel').carousel('next');
+      // swap all the divs as necessary
+      document.getElementById('currentArtistImage').id = 'temp';
+      document.getElementById('nextArtistImage').id = 'currentArtistImage';
+      document.getElementById('temp').id = 'nextArtistImage';
+      document.getElementById('currentTrack').id = 'temp';
+      document.getElementById('nextTrack').id = 'currentTrack';
+      document.getElementById('temp').id = 'nextTrack';
+      document.getElementById('currentArtistName').id = 'temp';
+      document.getElementById('nextArtistName').id = 'currentArtistName';
+      document.getElementById('temp').id = 'nextArtistName';
+      document.getElementById('paused').id = 'temp';
+      document.getElementById('off').id = 'paused';
+      document.getElementById('temp').id = 'off';
+      $("#streamURL").attr("src", nextStreamURL).detach().appendTo("#audioplayer");
+      $("#simArtist1Name").html(nextSim1) ;
+      $("#simArtist2Name").html(nextSim2) ;
+      $("#simArtist3Name").html(nextSim3) ;
+      $("#simArtist1Image").attr("src", nextSim1Image);
+      $("#simArtist2Image").attr("src", nextSim2Image);
+      $("#simArtist3Image").attr("src", nextSim3Image);
+      var rand = Math.floor((Math.random()*3)+1);
+      choose_song(rand,0);
+  }
+  var audioplayer = document.getElementById('audioplayer');
+  audioplayer.addEventListener('ended', next_song, false);
+  $('a[data-slide="next"]').click(next_song);
 </script>
-<script>
-  document.getElementById('audioplayer').addEventListener('ended', function(){
-    document.getElementById("artist1").setAttribute("style","-webkit-filter: blur(0px);");
-    document.getElementById("artist2").setAttribute("style","-webkit-filter: blur(0px)");
-    document.getElementById("artist3").setAttribute("style","-webkit-filter: blur(0px)");
-    $("#simArtist1Name").html("") ;
-    $("#simArtist2Name").html("") ;
-    $("#simArtist3Name").html("") ;
-    $("#simArtist1Image").attr("src", loadimg);
-    $("#simArtist2Image").attr("src", loadimg);
-    $("#simArtist3Image").attr("src", loadimg);
-    $('#myCarousel').carousel('next');
-    // swap all the divs as necessary
-    document.getElementById('currentArtistImage').id = 'temp';
-    document.getElementById('nextArtistImage').id = 'currentArtistImage';
-    document.getElementById('temp').id = 'nextArtistImage';
-    document.getElementById('currentTrack').id = 'temp';
-    document.getElementById('nextTrack').id = 'currentTrack';
-    document.getElementById('temp').id = 'nextTrack';
-    document.getElementById('currentArtistName').id = 'temp';
-    document.getElementById('nextArtistName').id = 'currentArtistName';
-    document.getElementById('temp').id = 'nextArtistName';
-    document.getElementById('paused').id = 'temp';
-    document.getElementById('off').id = 'paused';
-    document.getElementById('temp').id = 'off';
-    $("#streamURL").attr("src", nextStreamURL).detach().appendTo("#audioplayer");
-    $("#simArtist1Name").html(nextSim1) ;
-    $("#simArtist2Name").html(nextSim2) ;
-    $("#simArtist3Name").html(nextSim3) ;
-    $("#simArtist1Image").attr("src", nextSim1Image);
-    $("#simArtist2Image").attr("src", nextSim2Image);
-    $("#simArtist3Image").attr("src", nextSim3Image);
-    var rand = Math.floor((Math.random()*3)+1);
-    choose_song(rand,0);
-  }, false);
-</script>
-<script type="text/javascript" src="/static/intro.min.js"></script>
   </body>
 </html>
