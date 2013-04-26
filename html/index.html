@@ -10,7 +10,7 @@
     <!-- Le styles -->
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
     <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">
-    <link href="/static/introjs.css" rel="stylesheet">
+    <link href="/static/js/introjs.css" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <style>
 
@@ -75,7 +75,6 @@
     /* Carousel base class */
     .carousel {
       margin-bottom: 30px;
-      box-shadow: 3px 3px 3px 3px #000;
     }
 
     .carousel .container {
@@ -360,7 +359,7 @@
       });
   </script>
   <script>
-  function audio_play_pause() {
+  /*function audio_play_pause() {
     var myAudio = document.getElementById("audioplayer");
     if (myAudio.paused) {
       myAudio.play();
@@ -369,14 +368,11 @@
       myAudio.pause();
       $("#paused").html("Paused");
     }
-  }
+  }*/
   </script>
   </head>
 
-  <body onload='javascript:introJs().start();'>    
-    <audio id="audioplayer" autoplay>
-      <source id="streamURL" type="audio/mpeg">
-    </audio>
+  <body onload='javascript:introJs().start();'> 
 
     <!-- NAVBAR
     ================================================== -->
@@ -403,25 +399,31 @@
     ================================================== -->
     <div id="myCarousel" class="carousel slide">
       <div class="carousel-inner" >
-        <div class="item active"  onclick="audio_play_pause()">
+        <div class="item active"  style="position: relative" onclick="audio_play_pause()">
           <img id="currentArtistImage" src="/static/img/girltalk.jpg" alt="">
           <div class="container">
             <div class="carousel-caption center">
-              <h1 id="currentTrack">That's My DJ</h1>
+              <h1 id="currentTrack">Triple Double</h1>
               <p id="currentArtistName" class="lead" data-step='2' data-intro="Your song plays here. Click the image to pause/play. Click the arrow to skip to the next track" data-position='bottom'>Girl Talk</p>
               <h1 id="paused"></h1>
             </div>
           </div>
+          <audio style="position: absolute; bottom: 0; width: 100%;" id="audioplayer" controls autoplay>
+            <source id="streamURL" type="audio/mpeg">
+          </audio>
         </div>
-        <div class="item" onclick="audio_play_pause()">
-          <img id="nextArtistImage" alt="">
+        <div class="item"  style="position: relative" onclick="audio_play_pause()">
+          <img id="nextArtistImage" src="" alt="">
           <div class="container">
             <div class="carousel-caption center">
               <h1 id="nextTrack"></h1>
-              <p id="nextArtistName" class="lead"></p>
-              <h1 id="off"></h1>
+              <p id="nextArtistName" class="lead" data-step='2' data-intro="Your song plays here. Click the image to pause/play. Click the arrow to skip to the next track" data-position='bottom'></p>
+              <h1 id="paused"></h1>
             </div>
           </div>
+          <audio style="position: absolute; bottom: 0; width: 100%;" id="audioplayer" controls autoplay>
+            <source id="streamURL" type="audio/mpeg">
+          </audio>
         </div>
       </div>
       <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
@@ -497,8 +499,8 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-<script src="/static/bootstrap.min.js"></script></script>
-<script type="text/javascript" src="/static/intro.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script></script>
+<script type="text/javascript" src="/static/js/intro.min.js"></script>
 <script type="text/javascript">
      $('#myCarousel').carousel({interval: false})
 </script>

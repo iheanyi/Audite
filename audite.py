@@ -99,15 +99,15 @@ class Audite(object):
         for entry in feed.entry:
             song = entry
             streamURL = song.media.player.url
-            print streamURL
+            #print streamURL
             link = self.getYouTubeHTML(streamURL)
-            print "Link Checking"
+            #print "Link Checking"
             if(link is None):
-                print "LINK IS NONE, TRYING NEXT VIDEO"
+                #print "LINK IS NONE, TRYING NEXT VIDEO"
                 continue
             else:
-                print "Returning the link!"
-                print link
+                #print "Returning the link!"
+                #print link
                 return link
 
 
@@ -138,10 +138,10 @@ class Audite(object):
         cleanURLs = []
         for each in qualities:
             #print each
-            if("video/mp4" in each):
+            #if("video/mp4" in each):
 
-                print "Checking if video/mp4 junts in there."
-                print each
+                #print "Checking if video/mp4 junts in there."
+                #print each
             each = each.split(";+codecs=")[0]
             #print str(i) + ":" + qualities[i]
 
@@ -154,26 +154,26 @@ class Audite(object):
             if(("video/mp4" in each and "sig=" in each)): # or ("sig=" in each and "video/3gpp" in each)):
                 #print each
                 sigMatcher = sigPattern.search(each)
-                print "Valid URL!"
-                print each
+                #print "Valid URL!"
+                #print each
                 if(sigMatcher):
-                    print sigMatcher.group()
+                    #print sigMatcher.group()
                    # realSignature = re.match(r'signature=[0-9A-Z]{40}\.[0-9A-Z]{40}', each)      
                     #print realSignature       
                     lastTag = each.split("&itag=")[-1]
                     url = each.split("&itag=" + lastTag)[0]
                     if("sig=" in url):
-                        print "Signature already there."
+                        #print "Signature already there."
                         contentDecoded = url
-                    else:
-                        print "Signature not there."
+                    #else:
+                        #print "Signature not there."
                         #print "Appending signature"
                         #contentDecoded = url + "&" + sigMatcher.group()
                     #contentDecoded = contentDecoded.replace("x-flv", "flv")
                     #contentDecoded = re.sub(r'sig=[0-9A-Z]{40}\.[0-9A-Z]{40}.*', sigMatcher.group(), contentDecoded)
                     contentDecoded = contentDecoded.replace("sig=", "signature=")
-                    print "FINAL URL"
-                    print contentDecoded
+                    #print "FINAL URL"
+                    #print contentDecoded
                     cleanURLs.append(contentDecoded)
 
         #print qualities
@@ -182,7 +182,7 @@ class Audite(object):
 
         #contentDecoded = contentDecoded.replace("sig=", "signature=")
         #contentDecoded = contentDecoded.replace("x-flv", "flv")
-        print "PRINTING CLEAN URLS"
+        #print "PRINTING CLEAN URLS"
 
         for e in cleanURLs:
             #print mime + " " + e
@@ -195,8 +195,8 @@ class Audite(object):
                 and "itag=35" not in e 
                 and "itag=45" not in e):
                 return e
-            else:
-                print "Failed some test that I had . . . "
+            #else:
+                #print "Failed some test that I had . . . "
 
         # if("signature=" in contentDecoded):
         #     print "From conditional"
@@ -213,29 +213,25 @@ class Audite(object):
         #     self.play_song(currentTrackName, self.currentName)
         #     return simplejson.dumps(dict(currentTrack=currentTrackName))
 
-
-
-
     def parseCodecs(self, content):
-        print "PRINTING QUALITIES"
         matcher = re.compile(',')
         match = matcher.search(content)
         if(match):
             qualities = matcher.split(content)
-           #qualities = content.split(',')
+            #qualities = content.split(',')
             #print qualities[0:5]
             self.buildLinks(qualities[0], 1)
 
     def buildLinks(self, block, i):
         urlMatcher = re.compile(r'http:\/\/.*')
         match = urlMatcher.search(block)
-        print "BUILDING LINKS"
+        #print "BUILDING LINKS"
         if(match):
-            print "MATCH FOUND"
+            #print "MATCH FOUND"
             sigPattern = re.compile(r'signature=[0-9A-Z]{40}\.[0-9A-Z]{40}')
             sigMatcher = sigPattern.search(block)
             if(sigMatcher):
-                print "AND ANOTHER ONE"
+                #print "AND ANOTHER ONE"
                 urlString = match.group()
                 urlString = re.sub(r"&type=.*", "", urlString)
                 urlString = re.sub(r'&signature=.*', "", urlString)
@@ -248,12 +244,12 @@ class Audite(object):
 
                 newlink = bytearray(link)
 
-                print newlink
+                #print newlink
 
                 memLink = memoryview(link)
                 #dlLink = bytes.decode(str(ink))
-                print link
-                print memLink.tobytes()
+                #print link
+                #print memLink.tobytes()
                 #print dlLink
                 #print urlString
 
