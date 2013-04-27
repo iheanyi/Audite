@@ -430,7 +430,7 @@
         </div>
       </div>
       <a id="nextButton" class="right carousel-control" href="#myCarousel" style="visibility: hidden" data-slide="next">&rsaquo;</a>
-          <audio style="position: absolute; bottom: 0; width: 100%;" id="audioplayer" controls autoplay>
+          <audio style="position: absolute; bottom: 0; width: 100%;" id="audioplayer" onended="javascript:next_song()" controls autoplay>
             <source id="streamURL" type="audio/mpeg">
           </audio>
     </div><!-- /.carousel -->
@@ -511,7 +511,7 @@
      $('#myCarousel').carousel({interval: false})
 </script>
 <script>
-  $('a[data-slide="next"]').click(function () {
+function next_song() {
     document.getElementById("audioplayer").pause();
     $("#streamURL").attr("src", nextStreamURL).detach().appendTo("#audioplayer");
     document.getElementById("audioplayer").play();
@@ -546,7 +546,8 @@
     $("#simArtist3Image").attr("src", nextSim3Image);
     var rand = Math.floor((Math.random()*3)+1);
     choose_song(rand,0);
-  });
+  }
+  $('a[data-slide="next"]').click(next_song);
 </script>
 
   </body>
