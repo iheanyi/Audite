@@ -279,6 +279,7 @@
     window.nextSim1Image="";
     window.nextStreamURL="";
     function choose_song(num,who){
+      window.nextStreamURL="";
       var xb=document.getElementById("artist1");
       var yb=document.getElementById("artist2");
       var zb=document.getElementById("artist3");
@@ -329,12 +330,16 @@
       // When the testform is submitted…
 
       $("#search-form").submit(function() { 
+          document.getElementById("audioplayer").pause();
           // post the form values via AJAX…
           var postdata = {search_artist: $("#artist").val()};
           window.loadimg="/static/img/ajax-loader.gif"
           document.getElementById("artist1").setAttribute("style","-webkit-filter: blur(0px);");
           document.getElementById("artist2").setAttribute("style","-webkit-filter: blur(0px)");
           document.getElementById("artist3").setAttribute("style","-webkit-filter: blur(0px)");
+          $("#currentArtistName").html("") ;
+          $("#currentTrack").html("Searching...") ;
+          $("#currentArtistImage").hide();
           $("#simArtist1Name").html("") ;
           $("#simArtist2Name").html("") ;
           $("#simArtist3Name").html("") ;
@@ -353,6 +358,7 @@
               $("#simArtist2Image").attr("src", data['simArtist2Image']);
               $("#simArtist3Image").attr("src", data['simArtist3Image']);
               $("#streamURL").attr("src", data['streamURL']).detach().appendTo("#audioplayer");
+              document.getElementById("audioplayer").play();
               var rand = Math.floor((Math.random()*3)+1);
               choose_song(rand,0);
              });
