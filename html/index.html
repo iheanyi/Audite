@@ -371,10 +371,10 @@
   function audio_play_pause() {
     var myAudio = document.getElementById("audioplayer");
     if (myAudio.paused) {
-      //myAudio.play();
+      myAudio.play();
       $("#paused").html("");
     } else {
-      //myAudio.pause();
+      myAudio.pause();
       $("#paused").html("Paused");
     }
   }
@@ -408,7 +408,7 @@
     ================================================== -->
     <div id="myCarousel" class="carousel slide" style="position: relative">
       <div class="carousel-inner">
-        <div class="item active">
+        <div class="item active" onclick="javascript:audio_play_pause()">
           <img id="currentArtistImage" src="/static/img/girltalk.jpg" alt="">
           <div class="container">
             <div class="carousel-caption center">
@@ -418,12 +418,12 @@
             </div>
           </div>
         </div>
-        <div class="item">
+        <div class="item" onclick="javascript:audio_play_pause()">
           <img id="nextArtistImage" src="" alt="">
           <div class="container">
             <div class="carousel-caption center">
               <h1 id="nextTrack"></h1>
-              <p id="nextArtistName" class="lead" data-step='2' data-intro="Your song plays here. Click the image to pause/play. Click the arrow to skip to the next track" data-position='bottom'></p>
+              <p id="nextArtistName" class="lead"></p>
               <h1 id="off"></h1>
             </div>
           </div>
