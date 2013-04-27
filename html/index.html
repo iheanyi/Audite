@@ -282,6 +282,7 @@
       var xb=document.getElementById("artist1");
       var yb=document.getElementById("artist2");
       var zb=document.getElementById("artist3");
+      document.getElementById("nextButton").setAttribute("style","visibility: hidden");
       if (num==1){
         if(who==1){
           xb.setAttribute("style","-webkit-filter: blur(0px)")
@@ -318,6 +319,7 @@
         nextSim2Image=data['simArtist2Image'];
         nextSim3Image=data['simArtist3Image'];
         nextStreamURL=data['streamURL'];
+        document.getElementById("nextButton").setAttribute("style","visibility: visible");
       });
       return false;
     }
@@ -399,7 +401,7 @@
     ================================================== -->
     <div id="myCarousel" class="carousel slide" style="position: relative">
       <div class="carousel-inner">
-        <div class="item active" onclick="audio_play_pause()">
+        <div class="item active">
           <img id="currentArtistImage" src="/static/img/girltalk.jpg" alt="">
           <div class="container">
             <div class="carousel-caption center">
@@ -409,7 +411,7 @@
             </div>
           </div>
         </div>
-        <div class="item" onclick="audio_play_pause()">
+        <div class="item">
           <img id="nextArtistImage" src="" alt="">
           <div class="container">
             <div class="carousel-caption center">
@@ -420,7 +422,7 @@
           </div>
         </div>
       </div>
-      <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
+      <a id="nextButton" class="right carousel-control" href="#myCarousel" style="visibility: hidden" data-slide="next">&rsaquo;</a>
           <audio style="position: absolute; bottom: 0; width: 100%;" id="audioplayer" controls autoplay>
             <source id="streamURL" type="audio/mpeg">
           </audio>
