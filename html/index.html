@@ -279,9 +279,11 @@
     window.nextSim1Image="";
     window.nextStreamURL="";
     function choose_song(num,who){
+      window.nextStreamURL="";
       var xb=document.getElementById("artist1");
       var yb=document.getElementById("artist2");
       var zb=document.getElementById("artist3");
+      document.getElementById("nextButton").setAttribute("style","visibility: hidden");
       if (num==1){
         if(who==1){
           xb.setAttribute("style","-webkit-filter: blur(0px)")
@@ -318,6 +320,7 @@
         nextSim2Image=data['simArtist2Image'];
         nextSim3Image=data['simArtist3Image'];
         nextStreamURL=data['streamURL'];
+        document.getElementById("nextButton").setAttribute("style","visibility: visible");
       });
       return false;
     }
@@ -327,12 +330,16 @@
       // When the testform is submitted…
 
       $("#search-form").submit(function() { 
+          document.getElementById("audioplayer").pause();
           // post the form values via AJAX…
           var postdata = {search_artist: $("#artist").val()};
           window.loadimg="/static/img/ajax-loader.gif"
           document.getElementById("artist1").setAttribute("style","-webkit-filter: blur(0px);");
           document.getElementById("artist2").setAttribute("style","-webkit-filter: blur(0px)");
           document.getElementById("artist3").setAttribute("style","-webkit-filter: blur(0px)");
+          $("#currentArtistName").html("") ;
+          $("#currentTrack").html("Searching...") ;
+          $("#currentArtistImage").hide();
           $("#simArtist1Name").html("") ;
           $("#simArtist2Name").html("") ;
           $("#simArtist3Name").html("") ;
@@ -344,6 +351,7 @@
               $("#currentArtistName").html(data['currentArtistName']) ;
               $("#currentTrack").html(data['currentTrack']) ;
               $("#currentArtistImage").attr("src", data['currentArtistImage']);
+              $("#currentArtistImage").show();
               $("#simArtist1Name").html(data['simArtist1Name']) ;
               $("#simArtist2Name").html(data['simArtist2Name']) ;
               $("#simArtist3Name").html(data['simArtist3Name']) ;
@@ -351,6 +359,7 @@
               $("#simArtist2Image").attr("src", data['simArtist2Image']);
               $("#simArtist3Image").attr("src", data['simArtist3Image']);
               $("#streamURL").attr("src", data['streamURL']).detach().appendTo("#audioplayer");
+              document.getElementById("audioplayer").play();
               var rand = Math.floor((Math.random()*3)+1);
               choose_song(rand,0);
              });
@@ -362,10 +371,10 @@
   function audio_play_pause() {
     var myAudio = document.getElementById("audioplayer");
     if (myAudio.paused) {
-      //myAudio.play();
+      myAudio.play();
       $("#paused").html("");
     } else {
-      //myAudio.pause();
+      myAudio.pause();
       $("#paused").html("Paused");
     }
   }
@@ -399,7 +408,7 @@
     ================================================== -->
     <div id="myCarousel" class="carousel slide" style="position: relative">
       <div class="carousel-inner">
-        <div class="item active" onclick="audio_play_pause()">
+        <div class="item active" onclick="javascript:audio_play_pause()">
           <img id="currentArtistImage" src="/static/img/girltalk.jpg" alt="">
           <div class="container">
             <div class="carousel-caption center">
@@ -409,19 +418,19 @@
             </div>
           </div>
         </div>
-        <div class="item" onclick="audio_play_pause()">
+        <div class="item" onclick="javascript:audio_play_pause()">
           <img id="nextArtistImage" src="" alt="">
           <div class="container">
             <div class="carousel-caption center">
               <h1 id="nextTrack"></h1>
-              <p id="nextArtistName" class="lead" data-step='2' data-intro="Your song plays here. Click the image to pause/play. Click the arrow to skip to the next track" data-position='bottom'></p>
+              <p id="nextArtistName" class="lead"></p>
               <h1 id="off"></h1>
             </div>
           </div>
         </div>
       </div>
-      <a class="right carousel-control" href="#myCarousel" data-slide="next">&rsaquo;</a>
-          <audio style="position: absolute; bottom: 0; width: 100%;" id="audioplayer" controls autoplay>
+      <a id="nextButton" class="right carousel-control" href="#myCarousel" style="visibility: hidden" data-slide="next">&rsaquo;</a>
+          <audio style="position: absolute; bottom: 0; width: 100%;" id="audioplayer" onended="javascript:next_song()" controls autoplay>
             <source id="streamURL" type="audio/mpeg">
           </audio>
     </div><!-- /.carousel -->
@@ -502,7 +511,7 @@
      $('#myCarousel').carousel({interval: false})
 </script>
 <script>
-  $('a[data-slide="next"]').click(function () {
+function next_song() {
     document.getElementById("audioplayer").pause();
     $("#streamURL").attr("src", nextStreamURL).detach().appendTo("#audioplayer");
     document.getElementById("audioplayer").play();
@@ -537,7 +546,8 @@
     $("#simArtist3Image").attr("src", nextSim3Image);
     var rand = Math.floor((Math.random()*3)+1);
     choose_song(rand,0);
-  });
+  }
+  $('a[data-slide="next"]').click(next_song);
 </script>
 
   </body>
