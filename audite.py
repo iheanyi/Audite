@@ -19,10 +19,8 @@ config.ECHO_NEST_API_KEY="C9ZG8F5C8NZKIIZFE"
 
 HTML_DIR = os.path.join(os.path.abspath("."), u"html")
 STATIC_DIR = os.path.join(os.path.abspath("."), u"static")
-#similar=[]
-
-
 yt_service = gdata.youtube.service.YouTubeService()
+similar=[]
 
 class Audite(object):
     @cherrypy.expose
@@ -30,11 +28,17 @@ class Audite(object):
         return open(os.path.join(HTML_DIR, u'index.html'))
 
     @cherrypy.expose
-    def search(self,search_artist):
+    def search(self,search_artist,user):
         cherrypy.response.headers['Content-Type'] = 'application/json'
-        #similar.append(artist.Artist(search_artist))
-        #print similar
-        similarArtists=artist.similar(names=artist.Artist(search_artist).name,results=50)
+        print user
+        if user=='1':
+            if similar.__len__>1:
+                if search_artist not in [art.name for art in similar]:
+                    similar.append(artist.Artist(search_artist))
+            else:
+                similar.append(artist.Artist(search_artist))
+        print [art.name for art in similar]
+        similarArtists=artist.similar(names=[art.name for art in similar],results=50)
         random.shuffle(similarArtists)      
         currentImage=artist.Artist(search_artist).get_images(results=50)
         random.shuffle(currentImage)
