@@ -28,11 +28,13 @@ class Audite(object):
         return open(os.path.join(HTML_DIR, u'index.html'))
 
     @cherrypy.expose
-    def search(self,search_artist,user):
+    def search(self,search_artist,user,new_search):
         cherrypy.response.headers['Content-Type'] = 'application/json'
-        print user
+        #I want to clear out suggestions if the user submits the search form
         if user=='1':
             if similar.__len__>1:
+                if new_search=='1':
+                    del similar[0:len(similar)]
                 if search_artist not in [art.name for art in similar]:
                     similar.append(artist.Artist(search_artist))
             else:
