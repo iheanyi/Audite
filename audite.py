@@ -80,7 +80,11 @@ class Audite(object):
                 continue
             else:
                 print "Stream link getting returned is: " + streamLink
-                return simplejson.dumps(dict(currentTrack=currentTrackName,currentArtistName=currentArtist,currentArtistImage=currentImageURL,simArtist1Name=similarArtists[0].name,simArtist1Image=image1[0]['url'],simArtist2Name=similarArtists[1].name,simArtist2Image=image2[0]['url'],simArtist3Name=similarArtists[2].name,simArtist3Image=image3[0]['url'],streamURL=streamLink))
+                if streamLink.__len__==0:
+                    status="error"
+                else:
+                    status="success"
+                return simplejson.dumps(dict(currentTrack=currentTrackName,currentArtistName=currentArtist,currentArtistImage=currentImageURL,simArtist1Name=similarArtists[0].name,simArtist1Image=image1[0]['url'],simArtist2Name=similarArtists[1].name,simArtist2Image=image2[0]['url'],simArtist3Name=similarArtists[2].name,simArtist3Image=image3[0]['url'],streamURL=streamLink,status=status))
  
         streamLink = self.play_song(currentTrackName, currentArtist)
 
