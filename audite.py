@@ -30,17 +30,20 @@ class Audite(object):
     @cherrypy.expose
     def search(self,search_artist,user,new_search):
         cherrypy.response.headers['Content-Type'] = 'application/json'
-        #I want to clear out suggestions if the user submits the search form
-        if user=='1':
-            if similar.__len__>1:
-                if new_search=='1':
-                    del similar[0:len(similar)]
-                if search_artist not in [art.name for art in similar]:
-                    similar.append(artist.Artist(search_artist))
-            else:
-                similar.append(artist.Artist(search_artist))
-        print [art.name for art in similar]
-        similarArtists=artist.similar(names=[art.name for art in similar],results=50)
+        # This doesn't quite work yet, commented out for purpose of demonstration
+        #if user=='1':
+        #    if similar.__len__>1:
+        #        if new_search=='1':
+        #            del similar[0:len(similar)]
+        #        if similar.__len__==5:
+        #            print "Length is 5"
+        #            del similar[1]
+        #        if search_artist not in [art.name for art in similar]:
+        #            similar.append(artist.Artist(search_artist))
+        #    else:
+        #        similar.append(artist.Artist(search_artist))
+        #print [art.name for art in similar]
+        similarArtists=artist.similar(names=artist.Artist(search_artist),results=50)
         random.shuffle(similarArtists)      
         currentImage=artist.Artist(search_artist).get_images(results=50)
         random.shuffle(currentImage)
@@ -291,30 +294,6 @@ class Audite(object):
         #print r.text
 
         #self.PrintVideoFeed(feed)
-
-    def PrintVideoFeed(self, feed):
-      for entry in feed.entry:
-        self.PrintEntryDetails(entry)
-
-    def PrintEntryDetails(self, entry):
-      print 'Video title: %s' % entry.media.title.text
-      print 'Video published on: %s ' % entry.published.text
-      print 'Video description: %s' % entry.media.description.text
-      #print 'Video category: %s' % entry.media.category[[]0].text
-      print 'Video tags: %s' % entry.media.keywords.text
-      print 'Video watch page: %s' % entry.media.player.url
-      print 'Video flash player URL: %s' % entry.GetSwfUrl()
-      print 'Video duration: %s' % entry.media.duration.seconds
-
-      # show alternate formats
-      for alternate_format in entry.media.content:
-        if 'isDefault' not in alternate_format.extension_attributes:
-          print 'Alternate format: %s | url: %s ' % (alternate_format.type,
-                                                     alternate_format.url)
-
-      # show thumbnails
-      for thumbnail in entry.media.thumbnail:
-        print 'Thumbnail url: %s' % thumbnail.url
 
 
 config = {'/html':
