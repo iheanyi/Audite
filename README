@@ -1,0 +1,9 @@
+Dependencies for the Application (install using pip):
+
+- CherryPy
+-PyEchonest
+- YouTube GData
+- Requests
+- SimpleJSON
+- Webbrowser?
+
