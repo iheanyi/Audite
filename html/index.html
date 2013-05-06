@@ -308,7 +308,7 @@
         }
         nextArtist=document.getElementById("simArtist3Name").innerText;
       }
-      var postdata = {search_artist: nextArtist, user: who};
+      var postdata = {search_artist: nextArtist, user: who, new_search:0};
       $.post('/search', postdata, function(data) {
         $("#nextArtistName").html(data['currentArtistName']);
         $("#nextTrack").html(data['currentTrack']);
@@ -332,7 +332,7 @@
       $("#search-form").submit(function() { 
           document.getElementById("audioplayer").pause();
           // post the form values via AJAX…
-          var postdata = {search_artist: $("#artist").val(), user:1};
+          var postdata = {search_artist: $("#artist").val(), user:1, new_search:1};
           window.loadimg="/static/img/ajax-loader.gif"
           document.getElementById("artist1").setAttribute("style","-webkit-filter: blur(0px);");
           document.getElementById("artist2").setAttribute("style","-webkit-filter: blur(0px)");
